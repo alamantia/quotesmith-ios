@@ -27,6 +27,11 @@
     return str;
 }
 
+- (void) executeNext
+{
+    return;
+}
+
 - (void) executeTween
 {
     [UIView animateWithDuration:0.5
@@ -157,6 +162,10 @@
     of.size.width = expected.width +2;
     of.size.height = expected.height;
     
+    if (self.mode == TILE_MODE_WIN) {
+        self.backgroundColor = [UIColor clearColor];
+        label.textColor = [UIColor blackColor];
+    }
     self.frame = of;
 
     highlightView.frame = CGRectMake(0, 0, self.frame.size.width, self.frame.size.height);

@@ -419,7 +419,8 @@ float node_cost(CGPoint a, CGPoint b)
     d[@"author"] = @"Lao Tzu";
     d[@"quote_location"]    = @"";
     d[@"author_source"]     = @"";
-    d[@"author_url"]        = @"";
+    d[@"author_bio"]        = @"";
+    d[@"author_url"]        = @"https://en.wikipedia.org/wiki/Laozi";
     NSArray *words = [d[@"quote"] componentsSeparatedByString:@" "];
     d[@"words"] = [words copy];
     quote = [d copy];
