@@ -8,6 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface WIkipediaViewController : UIViewController
-
+@interface WIkipediaViewController : UIViewController <UIWebViewDelegate>
+- (void) loadAddress : (NSString *) address;
 @end

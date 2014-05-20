@@ -8,8 +8,10 @@
 
 #import "WIkipediaViewController.h"
 
-@interface WIkipediaViewController ()
-
+@interface WIkipediaViewController () {
+    UIWebView *webview;
+    UIActivityIndicatorView  *activity;
+}
 @end
 
 @implementation WIkipediaViewController
@@ -18,15 +20,46 @@
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-        self.view.backgroundColor = [UIColor blackColor];
+        self.view.backgroundColor = [UIColor whiteColor];
     }
     return self;
+}
+
+- (void)webViewDidFinishLoad:(UIWebView *)webView
+{
+    [activity removeFromSuperview];
+}
+
+- (void) loadAddress : (NSString *) address
+{
+    webview = [[UIWebView alloc] initWithFrame:self.view.bounds];
+    webview.delegate = self;
+    webview.scalesPageToFit = YES;
+    [webview loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:address]]];
+     [self.view addSubview:webview];
+    NSLog(@"Trying to load %@", address);
+    
+    activity = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+    activity.center = self.view.center;
+    [activity startAnimating];
+    [self.view addSubview:activity];
+
+}
+
+- (IBAction) done  :(id)sender
+{
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
+    
+    UIBarButtonItem *doneButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone
+                                                                                target:self
+                                                                                action:@selector(done:)];
+    [[self navigationItem] setRightBarButtonItem:doneButton];
+    
 }
 
 - (void)didReceiveMemoryWarning

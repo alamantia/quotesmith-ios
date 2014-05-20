@@ -25,6 +25,7 @@
 		BC87151018F4E91700F23138 /* fabric_of_squares_gray.png in Resources */ = {isa = PBXBuildFile; fileRef = BC87150E18F4E91700F23138 /* fabric_of_squares_gray.png */; };
 		BC8D5D261922597D00401294 /* GameInsideTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BC8D5D251922597D00401294 /* GameInsideTableViewController.m */; };
 		BCA6D272192AE2CB00F519A5 /* CircleView.m in Sources */ = {isa = PBXBuildFile; fileRef = BCA6D271192AE2CB00F519A5 /* CircleView.m */; };
+		BCA6D298192B2D2900F519A5 /* AppContext.m in Sources */ = {isa = PBXBuildFile; fileRef = BCA6D297192B2D2900F519A5 /* AppContext.m */; };
 		BCBC0BF118ED00EA005A528A /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BCBC0BF018ED00EA005A528A /* Foundation.framework */; };
 		BCBC0BF318ED00EA005A528A /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BCBC0BF218ED00EA005A528A /* CoreGraphics.framework */; };
 		BCBC0BF518ED00EA005A528A /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BCBC0BF418ED00EA005A528A /* UIKit.framework */; };
@@ -82,6 +83,8 @@
 		BC8D5D251922597D00401294 /* GameInsideTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GameInsideTableViewController.m; sourceTree = "<group>"; };
 		BCA6D270192AE2CB00F519A5 /* CircleView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CircleView.h; sourceTree = "<group>"; };
 		BCA6D271192AE2CB00F519A5 /* CircleView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CircleView.m; sourceTree = "<group>"; };
+		BCA6D296192B2D2900F519A5 /* AppContext.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppContext.h; sourceTree = "<group>"; };
+		BCA6D297192B2D2900F519A5 /* AppContext.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppContext.m; sourceTree = "<group>"; };
 		BCBC0BED18ED00EA005A528A /* QuoteSmith.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = QuoteSmith.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BCBC0BF018ED00EA005A528A /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		BCBC0BF218ED00EA005A528A /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -222,6 +225,8 @@
 				BC8D5D251922597D00401294 /* GameInsideTableViewController.m */,
 				BCA6D270192AE2CB00F519A5 /* CircleView.h */,
 				BCA6D271192AE2CB00F519A5 /* CircleView.m */,
+				BCA6D296192B2D2900F519A5 /* AppContext.h */,
+				BCA6D297192B2D2900F519A5 /* AppContext.m */,
 			);
 			path = QuoteSmith;
 			sourceTree = "<group>";
@@ -402,6 +407,7 @@
 				BCE8F736192187340001E3A3 /* WIkipediaViewController.m in Sources */,
 				BCBC0C0618ED00EA005A528A /* QuoteSmith.xcdatamodeld in Sources */,
 				BC4A64381910B38000BCE3FD /* TransitionManager.m in Sources */,
+				BCA6D298192B2D2900F519A5 /* AppContext.m in Sources */,
 				BC8D5D261922597D00401294 /* GameInsideTableViewController.m in Sources */,
 				BCA6D272192AE2CB00F519A5 /* CircleView.m in Sources */,
 				BCBC0C2A18ED0173005A528A /* WordTile.m in Sources */,

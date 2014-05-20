@@ -75,21 +75,18 @@
                                                              titleLabelRect.size.width,
                                                              titleLabelRect.size.height)];
     
-    
-
     t.mode = TILE_MODE_WIN;
     [t setString:s];
     [self.view addSubview:t];
     
-    
     CGFloat damping = 0.60;
     [UIView animateWithDuration:0.20 delay:0 usingSpringWithDamping: damping  initialSpringVelocity: 1.0 options:0 animations:^{
-        
-
         t.frame = CGRectMake(self.view.bounds.size.width - titleLabelRect.size.width - padding,
                              t_y_offset + cY + cHeight + padding_height,
                              titleLabelRect.size.width,
                              titleLabelRect.size.height);
+        // update cY
+        cY = t_y_offset + cY + cHeight + padding_height + cHeight;
     } completion:^(BOOL finished) {
         if ([pendingTiles count] <= 0) {
             [self displayNext];
@@ -179,7 +176,10 @@
     WIkipediaViewController *wvc = [[WIkipediaViewController alloc] init];
     wvc.view.frame = self.view.bounds;
     UINavigationController *n = [[UINavigationController alloc] initWithRootViewController:wvc];
-    [self presentViewController:n animated:YES completion:nil];
+    n.navigationBar.translucent = NO;
+    [self presentViewController:n animated:YES completion:^{
+        [wvc loadAddress:[self.quote objectForKey:@"author_url"]];
+    }];
 }
 
 - (void) finished : (id) sender
