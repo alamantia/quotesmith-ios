@@ -1,0 +1,632 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		1DDC1C96734C41DB95FE5B5F /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 38801A8A1DE846539933F44F /* libPods.a */; };
+		BC4A64351910A39B00BCE3FD /* WinViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BC4A64341910A39B00BCE3FD /* WinViewController.m */; };
+		BC4A64381910B38000BCE3FD /* TransitionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = BC4A64371910B38000BCE3FD /* TransitionManager.m */; };
+		BC4A643B1911F07B00BCE3FD /* MenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BC4A643A1911F07B00BCE3FD /* MenuViewController.m */; };
+		BC4A643F191309E700BCE3FD /* simplexnoise.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BC4A643D191309E700BCE3FD /* simplexnoise.cpp */; };
+		BC8714FC18F0AA0400F23138 /* stardust_@2X.png in Resources */ = {isa = PBXBuildFile; fileRef = BC8714FA18F0AA0400F23138 /* stardust_@2X.png */; };
+		BC8714FD18F0AA0400F23138 /* stardust.png in Resources */ = {isa = PBXBuildFile; fileRef = BC8714FB18F0AA0400F23138 /* stardust.png */; };
+		BC8714FF18F0AA0D00F23138 /* giftly.png in Resources */ = {isa = PBXBuildFile; fileRef = BC8714FE18F0AA0D00F23138 /* giftly.png */; };
+		BC87150118F0AA1700F23138 /* skulls.png in Resources */ = {isa = PBXBuildFile; fileRef = BC87150018F0AA1700F23138 /* skulls.png */; };
+		BC87150418F0B93700F23138 /* geometry_@2X.png in Resources */ = {isa = PBXBuildFile; fileRef = BC87150218F0B93700F23138 /* geometry_@2X.png */; };
+		BC87150518F0B93700F23138 /* geometry.png in Resources */ = {isa = PBXBuildFile; fileRef = BC87150318F0B93700F23138 /* geometry.png */; };
+		BC87150818F3849800F23138 /* UIColor+Expanded.m in Sources */ = {isa = PBXBuildFile; fileRef = BC87150718F3849800F23138 /* UIColor+Expanded.m */; };
+		BC87150B18F4E8AB00F23138 /* tweed_@2X.png in Resources */ = {isa = PBXBuildFile; fileRef = BC87150918F4E8AB00F23138 /* tweed_@2X.png */; };
+		BC87150C18F4E8AB00F23138 /* tweed.png in Resources */ = {isa = PBXBuildFile; fileRef = BC87150A18F4E8AB00F23138 /* tweed.png */; };
+		BC87150F18F4E91700F23138 /* fabric_of_squares_gray_@2X.png in Resources */ = {isa = PBXBuildFile; fileRef = BC87150D18F4E91700F23138 /* fabric_of_squares_gray_@2X.png */; };
+		BC87151018F4E91700F23138 /* fabric_of_squares_gray.png in Resources */ = {isa = PBXBuildFile; fileRef = BC87150E18F4E91700F23138 /* fabric_of_squares_gray.png */; };
+		BC8D5D261922597D00401294 /* GameInsideTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BC8D5D251922597D00401294 /* GameInsideTableViewController.m */; };
+		BCBC0BF118ED00EA005A528A /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BCBC0BF018ED00EA005A528A /* Foundation.framework */; };
+		BCBC0BF318ED00EA005A528A /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BCBC0BF218ED00EA005A528A /* CoreGraphics.framework */; };
+		BCBC0BF518ED00EA005A528A /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BCBC0BF418ED00EA005A528A /* UIKit.framework */; };
+		BCBC0BF718ED00EA005A528A /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BCBC0BF618ED00EA005A528A /* CoreData.framework */; };
+		BCBC0BFD18ED00EA005A528A /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = BCBC0BFB18ED00EA005A528A /* InfoPlist.strings */; };
+		BCBC0BFF18ED00EA005A528A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = BCBC0BFE18ED00EA005A528A /* main.m */; };
+		BCBC0C0318ED00EA005A528A /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = BCBC0C0218ED00EA005A528A /* AppDelegate.m */; };
+		BCBC0C0618ED00EA005A528A /* QuoteSmith.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = BCBC0C0418ED00EA005A528A /* QuoteSmith.xcdatamodeld */; };
+		BCBC0C0818ED00EA005A528A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BCBC0C0718ED00EA005A528A /* Images.xcassets */; };
+		BCBC0C0F18ED00EA005A528A /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BCBC0C0E18ED00EA005A528A /* XCTest.framework */; };
+		BCBC0C1018ED00EA005A528A /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BCBC0BF018ED00EA005A528A /* Foundation.framework */; };
+		BCBC0C1118ED00EA005A528A /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BCBC0BF418ED00EA005A528A /* UIKit.framework */; };
+		BCBC0C1218ED00EA005A528A /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BCBC0BF618ED00EA005A528A /* CoreData.framework */; };
+		BCBC0C1A18ED00EA005A528A /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = BCBC0C1818ED00EA005A528A /* InfoPlist.strings */; };
+		BCBC0C1C18ED00EA005A528A /* QuoteSmithTests.m in Sources */ = {isa = PBXBuildFile; fileRef = BCBC0C1B18ED00EA005A528A /* QuoteSmithTests.m */; };
+		BCBC0C2718ED0143005A528A /* GameViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BCBC0C2618ED0143005A528A /* GameViewController.m */; };
+		BCBC0C2A18ED0173005A528A /* WordTile.m in Sources */ = {isa = PBXBuildFile; fileRef = BCBC0C2918ED0173005A528A /* WordTile.m */; };
+		BCE8F736192187340001E3A3 /* WIkipediaViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BCE8F735192187340001E3A3 /* WIkipediaViewController.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		BCBC0C1318ED00EA005A528A /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BCBC0BE518ED00EA005A528A /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = BCBC0BEC18ED00EA005A528A;
+			remoteInfo = QuoteSmith;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		38801A8A1DE846539933F44F /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		55DE670D30354033AD6E184B /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = "<group>"; };
+		BC4A64331910A39B00BCE3FD /* WinViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WinViewController.h; sourceTree = "<group>"; };
+		BC4A64341910A39B00BCE3FD /* WinViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WinViewController.m; sourceTree = "<group>"; };
+		BC4A64361910B38000BCE3FD /* TransitionManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TransitionManager.h; sourceTree = "<group>"; };
+		BC4A64371910B38000BCE3FD /* TransitionManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TransitionManager.m; sourceTree = "<group>"; };
+		BC4A64391911F07B00BCE3FD /* MenuViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MenuViewController.h; sourceTree = "<group>"; };
+		BC4A643A1911F07B00BCE3FD /* MenuViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MenuViewController.m; sourceTree = "<group>"; };
+		BC4A643D191309E700BCE3FD /* simplexnoise.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 4; path = simplexnoise.cpp; sourceTree = "<group>"; };
+		BC4A643E191309E700BCE3FD /* simplexnoise.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = simplexnoise.h; sourceTree = "<group>"; };
+		BC8714FA18F0AA0400F23138 /* stardust_@2X.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "stardust_@2X.png"; sourceTree = "<group>"; };
+		BC8714FB18F0AA0400F23138 /* stardust.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = stardust.png; sourceTree = "<group>"; };
+		BC8714FE18F0AA0D00F23138 /* giftly.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = giftly.png; sourceTree = "<group>"; };
+		BC87150018F0AA1700F23138 /* skulls.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = skulls.png; sourceTree = "<group>"; };
+		BC87150218F0B93700F23138 /* geometry_@2X.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "geometry_@2X.png"; sourceTree = "<group>"; };
+		BC87150318F0B93700F23138 /* geometry.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = geometry.png; sourceTree = "<group>"; };
+		BC87150618F3849800F23138 /* UIColor+Expanded.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+Expanded.h"; sourceTree = "<group>"; };
+		BC87150718F3849800F23138 /* UIColor+Expanded.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+Expanded.m"; sourceTree = "<group>"; };
+		BC87150918F4E8AB00F23138 /* tweed_@2X.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tweed_@2X.png"; sourceTree = "<group>"; };
+		BC87150A18F4E8AB00F23138 /* tweed.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tweed.png; sourceTree = "<group>"; };
+		BC87150D18F4E91700F23138 /* fabric_of_squares_gray_@2X.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "fabric_of_squares_gray_@2X.png"; sourceTree = "<group>"; };
+		BC87150E18F4E91700F23138 /* fabric_of_squares_gray.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = fabric_of_squares_gray.png; sourceTree = "<group>"; };
+		BC8D5D241922597D00401294 /* GameInsideTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameInsideTableViewController.h; sourceTree = "<group>"; };
+		BC8D5D251922597D00401294 /* GameInsideTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GameInsideTableViewController.m; sourceTree = "<group>"; };
+		BCBC0BED18ED00EA005A528A /* QuoteSmith.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = QuoteSmith.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		BCBC0BF018ED00EA005A528A /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		BCBC0BF218ED00EA005A528A /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		BCBC0BF418ED00EA005A528A /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		BCBC0BF618ED00EA005A528A /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
+		BCBC0BFA18ED00EA005A528A /* QuoteSmith-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "QuoteSmith-Info.plist"; sourceTree = "<group>"; };
+		BCBC0BFC18ED00EA005A528A /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		BCBC0BFE18ED00EA005A528A /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		BCBC0C0018ED00EA005A528A /* QuoteSmith-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "QuoteSmith-Prefix.pch"; sourceTree = "<group>"; };
+		BCBC0C0118ED00EA005A528A /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		BCBC0C0218ED00EA005A528A /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		BCBC0C0518ED00EA005A528A /* QuoteSmith.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = QuoteSmith.xcdatamodel; sourceTree = "<group>"; };
+		BCBC0C0718ED00EA005A528A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		BCBC0C0D18ED00EA005A528A /* QuoteSmithTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = QuoteSmithTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		BCBC0C0E18ED00EA005A528A /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
+		BCBC0C1718ED00EA005A528A /* QuoteSmithTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "QuoteSmithTests-Info.plist"; sourceTree = "<group>"; };
+		BCBC0C1918ED00EA005A528A /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		BCBC0C1B18ED00EA005A528A /* QuoteSmithTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QuoteSmithTests.m; sourceTree = "<group>"; };
+		BCBC0C2518ED0143005A528A /* GameViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameViewController.h; sourceTree = "<group>"; };
+		BCBC0C2618ED0143005A528A /* GameViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GameViewController.m; sourceTree = "<group>"; };
+		BCBC0C2818ED0173005A528A /* WordTile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WordTile.h; sourceTree = "<group>"; };
+		BCBC0C2918ED0173005A528A /* WordTile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WordTile.m; sourceTree = "<group>"; };
+		BCE8F734192187340001E3A3 /* WIkipediaViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WIkipediaViewController.h; sourceTree = "<group>"; };
+		BCE8F735192187340001E3A3 /* WIkipediaViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WIkipediaViewController.m; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		BCBC0BEA18ED00EA005A528A /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				BCBC0BF318ED00EA005A528A /* CoreGraphics.framework in Frameworks */,
+				BCBC0BF718ED00EA005A528A /* CoreData.framework in Frameworks */,
+				BCBC0BF518ED00EA005A528A /* UIKit.framework in Frameworks */,
+				BCBC0BF118ED00EA005A528A /* Foundation.framework in Frameworks */,
+				1DDC1C96734C41DB95FE5B5F /* libPods.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		BCBC0C0A18ED00EA005A528A /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				BCBC0C0F18ED00EA005A528A /* XCTest.framework in Frameworks */,
+				BCBC0C1218ED00EA005A528A /* CoreData.framework in Frameworks */,
+				BCBC0C1118ED00EA005A528A /* UIKit.framework in Frameworks */,
+				BCBC0C1018ED00EA005A528A /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		BC4A643C191309BA00BCE3FD /* Noise */ = {
+			isa = PBXGroup;
+			children = (
+				BC4A643D191309E700BCE3FD /* simplexnoise.cpp */,
+				BC4A643E191309E700BCE3FD /* simplexnoise.h */,
+			);
+			name = Noise;
+			sourceTree = "<group>";
+		};
+		BC8714F918F0A9FD00F23138 /* assets */ = {
+			isa = PBXGroup;
+			children = (
+				BC87150218F0B93700F23138 /* geometry_@2X.png */,
+				BC87150318F0B93700F23138 /* geometry.png */,
+				BC87150018F0AA1700F23138 /* skulls.png */,
+				BC8714FE18F0AA0D00F23138 /* giftly.png */,
+				BC8714FA18F0AA0400F23138 /* stardust_@2X.png */,
+				BC8714FB18F0AA0400F23138 /* stardust.png */,
+			);
+			name = assets;
+			sourceTree = "<group>";
+		};
+		BCBC0BE418ED00EA005A528A = {
+			isa = PBXGroup;
+			children = (
+				BC4A643C191309BA00BCE3FD /* Noise */,
+				BC4A64391911F07B00BCE3FD /* MenuViewController.h */,
+				BC4A643A1911F07B00BCE3FD /* MenuViewController.m */,
+				BCBC0BF818ED00EA005A528A /* QuoteSmith */,
+				BCBC0C1518ED00EA005A528A /* QuoteSmithTests */,
+				BCBC0BEF18ED00EA005A528A /* Frameworks */,
+				BCBC0BEE18ED00EA005A528A /* Products */,
+				55DE670D30354033AD6E184B /* Pods.xcconfig */,
+			);
+			sourceTree = "<group>";
+		};
+		BCBC0BEE18ED00EA005A528A /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				BCBC0BED18ED00EA005A528A /* QuoteSmith.app */,
+				BCBC0C0D18ED00EA005A528A /* QuoteSmithTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		BCBC0BEF18ED00EA005A528A /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				BCBC0BF018ED00EA005A528A /* Foundation.framework */,
+				BCBC0BF218ED00EA005A528A /* CoreGraphics.framework */,
+				BCBC0BF418ED00EA005A528A /* UIKit.framework */,
+				BCBC0BF618ED00EA005A528A /* CoreData.framework */,
+				BCBC0C0E18ED00EA005A528A /* XCTest.framework */,
+				38801A8A1DE846539933F44F /* libPods.a */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		BCBC0BF818ED00EA005A528A /* QuoteSmith */ = {
+			isa = PBXGroup;
+			children = (
+				BC87150D18F4E91700F23138 /* fabric_of_squares_gray_@2X.png */,
+				BC87150E18F4E91700F23138 /* fabric_of_squares_gray.png */,
+				BC87150918F4E8AB00F23138 /* tweed_@2X.png */,
+				BC87150A18F4E8AB00F23138 /* tweed.png */,
+				BC87150618F3849800F23138 /* UIColor+Expanded.h */,
+				BC87150718F3849800F23138 /* UIColor+Expanded.m */,
+				BC8714F918F0A9FD00F23138 /* assets */,
+				BCBC0C0118ED00EA005A528A /* AppDelegate.h */,
+				BCBC0C0218ED00EA005A528A /* AppDelegate.m */,
+				BCBC0C0718ED00EA005A528A /* Images.xcassets */,
+				BCBC0C0418ED00EA005A528A /* QuoteSmith.xcdatamodeld */,
+				BCBC0BF918ED00EA005A528A /* Supporting Files */,
+				BCBC0C2518ED0143005A528A /* GameViewController.h */,
+				BCBC0C2618ED0143005A528A /* GameViewController.m */,
+				BCBC0C2818ED0173005A528A /* WordTile.h */,
+				BCBC0C2918ED0173005A528A /* WordTile.m */,
+				BC4A64331910A39B00BCE3FD /* WinViewController.h */,
+				BC4A64341910A39B00BCE3FD /* WinViewController.m */,
+				BC4A64361910B38000BCE3FD /* TransitionManager.h */,
+				BC4A64371910B38000BCE3FD /* TransitionManager.m */,
+				BCE8F734192187340001E3A3 /* WIkipediaViewController.h */,
+				BCE8F735192187340001E3A3 /* WIkipediaViewController.m */,
+				BC8D5D241922597D00401294 /* GameInsideTableViewController.h */,
+				BC8D5D251922597D00401294 /* GameInsideTableViewController.m */,
+			);
+			path = QuoteSmith;
+			sourceTree = "<group>";
+		};
+		BCBC0BF918ED00EA005A528A /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				BCBC0BFA18ED00EA005A528A /* QuoteSmith-Info.plist */,
+				BCBC0BFB18ED00EA005A528A /* InfoPlist.strings */,
+				BCBC0BFE18ED00EA005A528A /* main.m */,
+				BCBC0C0018ED00EA005A528A /* QuoteSmith-Prefix.pch */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		BCBC0C1518ED00EA005A528A /* QuoteSmithTests */ = {
+			isa = PBXGroup;
+			children = (
+				BCBC0C1B18ED00EA005A528A /* QuoteSmithTests.m */,
+				BCBC0C1618ED00EA005A528A /* Supporting Files */,
+			);
+			path = QuoteSmithTests;
+			sourceTree = "<group>";
+		};
+		BCBC0C1618ED00EA005A528A /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				BCBC0C1718ED00EA005A528A /* QuoteSmithTests-Info.plist */,
+				BCBC0C1818ED00EA005A528A /* InfoPlist.strings */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		BCBC0BEC18ED00EA005A528A /* QuoteSmith */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = BCBC0C1F18ED00EA005A528A /* Build configuration list for PBXNativeTarget "QuoteSmith" */;
+			buildPhases = (
+				17294AC6F4264051BC9C0059 /* Check Pods Manifest.lock */,
+				BCBC0BE918ED00EA005A528A /* Sources */,
+				BCBC0BEA18ED00EA005A528A /* Frameworks */,
+				BCBC0BEB18ED00EA005A528A /* Resources */,
+				E433DA539D6949E4AE78D04E /* Copy Pods Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = QuoteSmith;
+			productName = QuoteSmith;
+			productReference = BCBC0BED18ED00EA005A528A /* QuoteSmith.app */;
+			productType = "com.apple.product-type.application";
+		};
+		BCBC0C0C18ED00EA005A528A /* QuoteSmithTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = BCBC0C2218ED00EA005A528A /* Build configuration list for PBXNativeTarget "QuoteSmithTests" */;
+			buildPhases = (
+				BCBC0C0918ED00EA005A528A /* Sources */,
+				BCBC0C0A18ED00EA005A528A /* Frameworks */,
+				BCBC0C0B18ED00EA005A528A /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				BCBC0C1418ED00EA005A528A /* PBXTargetDependency */,
+			);
+			name = QuoteSmithTests;
+			productName = QuoteSmithTests;
+			productReference = BCBC0C0D18ED00EA005A528A /* QuoteSmithTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		BCBC0BE518ED00EA005A528A /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0510;
+				ORGANIZATIONNAME = "Anthony LaMantia";
+				TargetAttributes = {
+					BCBC0C0C18ED00EA005A528A = {
+						TestTargetID = BCBC0BEC18ED00EA005A528A;
+					};
+				};
+			};
+			buildConfigurationList = BCBC0BE818ED00EA005A528A /* Build configuration list for PBXProject "QuoteSmith" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = BCBC0BE418ED00EA005A528A;
+			productRefGroup = BCBC0BEE18ED00EA005A528A /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				BCBC0BEC18ED00EA005A528A /* QuoteSmith */,
+				BCBC0C0C18ED00EA005A528A /* QuoteSmithTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		BCBC0BEB18ED00EA005A528A /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				BC8714FC18F0AA0400F23138 /* stardust_@2X.png in Resources */,
+				BC87150C18F4E8AB00F23138 /* tweed.png in Resources */,
+				BC87150118F0AA1700F23138 /* skulls.png in Resources */,
+				BC87150418F0B93700F23138 /* geometry_@2X.png in Resources */,
+				BC87150B18F4E8AB00F23138 /* tweed_@2X.png in Resources */,
+				BC87150518F0B93700F23138 /* geometry.png in Resources */,
+				BC8714FD18F0AA0400F23138 /* stardust.png in Resources */,
+				BC8714FF18F0AA0D00F23138 /* giftly.png in Resources */,
+				BCBC0BFD18ED00EA005A528A /* InfoPlist.strings in Resources */,
+				BC87151018F4E91700F23138 /* fabric_of_squares_gray.png in Resources */,
+				BCBC0C0818ED00EA005A528A /* Images.xcassets in Resources */,
+				BC87150F18F4E91700F23138 /* fabric_of_squares_gray_@2X.png in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		BCBC0C0B18ED00EA005A528A /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				BCBC0C1A18ED00EA005A528A /* InfoPlist.strings in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		17294AC6F4264051BC9C0059 /* Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		E433DA539D6949E4AE78D04E /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Pods-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		BCBC0BE918ED00EA005A528A /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				BC87150818F3849800F23138 /* UIColor+Expanded.m in Sources */,
+				BC4A643B1911F07B00BCE3FD /* MenuViewController.m in Sources */,
+				BC4A64351910A39B00BCE3FD /* WinViewController.m in Sources */,
+				BCBC0C2718ED0143005A528A /* GameViewController.m in Sources */,
+				BCE8F736192187340001E3A3 /* WIkipediaViewController.m in Sources */,
+				BCBC0C0618ED00EA005A528A /* QuoteSmith.xcdatamodeld in Sources */,
+				BC4A64381910B38000BCE3FD /* TransitionManager.m in Sources */,
+				BC8D5D261922597D00401294 /* GameInsideTableViewController.m in Sources */,
+				BCBC0C2A18ED0173005A528A /* WordTile.m in Sources */,
+				BCBC0C0318ED00EA005A528A /* AppDelegate.m in Sources */,
+				BCBC0BFF18ED00EA005A528A /* main.m in Sources */,
+				BC4A643F191309E700BCE3FD /* simplexnoise.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		BCBC0C0918ED00EA005A528A /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				BCBC0C1C18ED00EA005A528A /* QuoteSmithTests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		BCBC0C1418ED00EA005A528A /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = BCBC0BEC18ED00EA005A528A /* QuoteSmith */;
+			targetProxy = BCBC0C1318ED00EA005A528A /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		BCBC0BFB18ED00EA005A528A /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				BCBC0BFC18ED00EA005A528A /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		BCBC0C1818ED00EA005A528A /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				BCBC0C1918ED00EA005A528A /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		BCBC0C1D18ED00EA005A528A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		BCBC0C1E18ED00EA005A528A /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = YES;
+				ENABLE_NS_ASSERTIONS = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		BCBC0C2018ED00EA005A528A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 55DE670D30354033AD6E184B /* Pods.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "QuoteSmith/QuoteSmith-Prefix.pch";
+				INFOPLIST_FILE = "QuoteSmith/QuoteSmith-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		BCBC0C2118ED00EA005A528A /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 55DE670D30354033AD6E184B /* Pods.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "QuoteSmith/QuoteSmith-Prefix.pch";
+				INFOPLIST_FILE = "QuoteSmith/QuoteSmith-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+		BCBC0C2318ED00EA005A528A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/QuoteSmith.app/QuoteSmith";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+					"$(DEVELOPER_FRAMEWORKS_DIR)",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "QuoteSmith/QuoteSmith-Prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = "QuoteSmithTests/QuoteSmithTests-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUNDLE_LOADER)";
+				WRAPPER_EXTENSION = xctest;
+			};
+			name = Debug;
+		};
+		BCBC0C2418ED00EA005A528A /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/QuoteSmith.app/QuoteSmith";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+					"$(DEVELOPER_FRAMEWORKS_DIR)",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "QuoteSmith/QuoteSmith-Prefix.pch";
+				INFOPLIST_FILE = "QuoteSmithTests/QuoteSmithTests-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUNDLE_LOADER)";
+				WRAPPER_EXTENSION = xctest;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		BCBC0BE818ED00EA005A528A /* Build configuration list for PBXProject "QuoteSmith" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				BCBC0C1D18ED00EA005A528A /* Debug */,
+				BCBC0C1E18ED00EA005A528A /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		BCBC0C1F18ED00EA005A528A /* Build configuration list for PBXNativeTarget "QuoteSmith" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				BCBC0C2018ED00EA005A528A /* Debug */,
+				BCBC0C2118ED00EA005A528A /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		BCBC0C2218ED00EA005A528A /* Build configuration list for PBXNativeTarget "QuoteSmithTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				BCBC0C2318ED00EA005A528A /* Debug */,
+				BCBC0C2418ED00EA005A528A /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		BCBC0C0418ED00EA005A528A /* QuoteSmith.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				BCBC0C0518ED00EA005A528A /* QuoteSmith.xcdatamodel */,
+			);
+			currentVersion = BCBC0C0518ED00EA005A528A /* QuoteSmith.xcdatamodel */;
+			path = QuoteSmith.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
+	};
+	rootObject = BCBC0BE518ED00EA005A528A /* Project object */;
+}

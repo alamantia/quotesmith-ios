@@ -1,0 +1,386 @@
+//
+//  GameViewController.m
+//  QuoteSmith
+//
+//  Created by waffles on 4/2/14.
+//  Copyright (c) 2014 Anthony LaMantia. All rights reserved.
+//
+
+
+#import "GameViewController.h"
+#import "WordTile.h"
+
+unsigned int MIN_COST = 90;
+
+@interface GameViewController ()
+{
+    CGFloat lastScale;
+    CGFloat lastRotation;
+    
+    CGFloat firstX;
+    CGFloat firstY;
+    
+    NSMutableDictionary *quote;
+    NSMutableArray      *tileViews;
+    NSMutableArray      *fillViews;
+    
+    BOOL moving;
+    UIView *movingView;
+    UILabel *debugLabel;
+}
+@end
+
+// adjust to case y alignment to be stronger.
+float node_cost(CGPoint a, CGPoint b)
+{
+    return sqrtf((powf((b.x - a.x),2)) + (powf((b.y - a.y),2)));
+}
+
+
+@implementation GameViewController
+
+- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
+{
+    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+    if (self) {
+        // Custom initialization
+    }
+    return self;
+}
+
+// calculate and print the order of views
+- (void) orderViews
+{
+    return;
+}
+
+- (WordTile *) firstTile
+{
+    WordTile *r = nil;
+    float lowest = 1000000;
+    for (WordTile *t in tileViews) {
+        CGPoint a = CGPointMake(0, 0);
+        int c = node_cost(a, CGPointMake(t.frame.origin.x, t.frame.origin.y));
+        if (r == nil) {
+            r = t;
+            lowest = c;
+            continue;
+        }
+        if (c < lowest) {
+            r = t;
+            lowest = c;
+        }
+    }
+    return r;
+}
+
+- (WordTile *) nextTileFromPoint : (CGPoint) a withCurrent:(WordTile *)p
+{
+    WordTile *r = nil;
+    unsigned int lowest = 100000;
+    for (WordTile *t in fillViews) {
+        if (t == p)
+            continue;
+        CGPoint b = CGPointMake(t.frame.origin.x, (t.frame.origin.y ));
+        unsigned int cost = node_cost(a, b);
+        float y_diff = b.y - p.frame.origin.y;
+
+        NSLog(@"next line %@ to %@ - %i with slope %f -- ydiff %f", p.str, t.str, cost, (a.y - b.y) / (a.x - b.x), y_diff);
+
+        if (y_diff >= MIN_COST)
+            continue;
+        if (r == nil) {
+            r = t;
+            lowest = cost;
+            continue;
+        }
+        if (cost < lowest) {
+            r = t;
+            lowest = cost;
+        }
+    }
+    
+    CGPoint b = CGPointMake(r.frame.origin.x, r.frame.origin.y );
+    float y_diff = b.y - p.frame.origin.y;
+    
+    NSLog(@"b - found %@ cost %i", r.str, lowest);
+    NSLog(@"ydiff %@ pre %f", r.str, y_diff);
+
+    if (fabs(y_diff) >= MIN_COST) {
+        return nil;
+    }
+
+    if (lowest >= MIN_COST) {
+        NSLog(@"%@ y_diff %f", r.str, fabs(y_diff));
+        NSLog(@"a - found %@ cost %i", r.str, lowest);
+    //    return nil;
+    }
+    return r;
+}
+
+- (WordTile *) nextTile : (WordTile *) p
+{
+    WordTile *r = nil;
+    unsigned int lowest = 100000;
+    for (WordTile *t in fillViews) {
+        if (t == p)
+            continue;
+        // a should be top right
+        CGPoint a = CGPointMake(p.frame.origin.x + p.frame.size.width, (p.frame.origin.y ));
+        CGPoint b = CGPointMake(t.frame.origin.x, (t.frame.origin.y ));
+        unsigned int cost = node_cost(a, b);
+        if (r == nil) {
+            r = t;
+            lowest = cost;
+            NSLog(@"%@ to %@ - %i with slope %f ", p.str, t.str, cost, (a.y - b.y) / (a.x - b.x));
+            continue;
+        }
+        CGPoint c = CGPointMake(r.frame.origin.x, (r.frame.origin.y ));
+        float  slope_new = (a.y - b.y) / (a.x - b.x);
+        float  slope_old = (a.y - c.y) / (a.x - c.x);
+        float  slope_diff = slope_new - slope_old;
+        NSLog(@"%@ to %@ - %i with slope %f - slope diff %f", p.str, t.str, cost, (a.y - b.y) / (a.x - b.x), slope_diff);
+        if (cost < lowest) {
+            r = t;
+            lowest = cost;
+        }
+    }
+    CGPoint a = CGPointMake(p.frame.origin.x + p.frame.size.width, (p.frame.origin.y ));
+    CGPoint b = CGPointMake(r.frame.origin.x, (r.frame.origin.y ));
+    float y_diff = b.y - a.y;
+    NSLog(@"%@ ydiff %f", r.str, y_diff);
+    if (y_diff <= -40) {
+        return nil;
+    }
+    if (y_diff >= 40) {
+        NSLog(@"Searching next line after %@", p.str);
+        CGPoint x = CGPointMake(0, b.y);
+        return [self nextTileFromPoint:x withCurrent:p];
+    }
+    /*
+    if (slope >= 0.50) {
+        NSLog(@"Next word is on new line %f!", slope);
+        return nil;
+    }
+    */
+    if (lowest >= MIN_COST) {
+        return nil;
+    }
+    NSLog(@"- found %@ cost %i", r.str, lowest);
+    return r;
+}
+
+- (void) presentFinshed
+{
+    return;
+}
+
+- (void) animateBackground
+{
+    return;
+}
+
+- (NSMutableArray *) chainFromTile : (WordTile *) firstTile
+{
+    NSMutableArray *filled = [[NSMutableArray alloc] init];
+    NSMutableArray *chain = [[NSMutableArray alloc] init];
+    
+    NSLog(@"Building chain from tile %@", firstTile.str);
+    for (WordTile *t in tileViews) {
+        [fillViews addObject:t];
+    }
+    return chain;
+}
+
+// matches everyblock .. searching for full matches .. will not stop at gaps
+- (void) beginLogic3
+{
+    NSMutableArray *currentChain = [[NSMutableArray alloc] init];
+    for (WordTile *tile in tileViews) {
+        currentChain = [self chainFromTile:tile];
+    }
+    return;
+}
+
+- (void) beginLogic2
+{
+    
+}
+
+// begins matching the first non-borken block from the starting location
+- (void) beginLogic
+{
+    NSMutableArray *ordered = [[NSMutableArray alloc] init];
+    WordTile *current = nil;
+    WordTile *first = [self firstTile];
+    debugLabel.text = first.str;
+    current = first;
+    fillViews = nil;
+    fillViews = [[NSMutableArray alloc] init];
+    for (WordTile *t in tileViews) {
+        [fillViews addObject:t];
+    }
+    [fillViews removeObject:current];
+    [ordered addObject:current];
+    for (int i = [tileViews count]; i > 0;i--) {
+        WordTile *next = [self nextTile:current];
+        if (next == nil) {
+            break;
+        }
+        NSString *s = [NSString stringWithFormat:@"%@ %@ ", debugLabel.text, next.str];
+        debugLabel.text = s;
+        current = next;
+        [ordered addObject:current];
+        [fillViews removeObject:current];
+    }
+    
+    if ([ordered count] <= 0)
+        return;
+    
+    for (int i = 0; i < [quote[@"words"] count]; i++) {
+        NSString *word = [quote[@"words"] objectAtIndex:i];
+        if (i >= [ordered count])
+            return;
+        WordTile *t = ordered[i];
+        NSLog(@"%i compare %@ to %@", i, t.str, word);
+        if ([[word lowercaseString] isEqualToString:[t.str lowercaseString]]) {
+            [t highlightGreen];
+        } else {
+            [t highlightRed];
+        }
+    }
+    
+    return;
+}
+
+- (void)setTranslation:(CGPoint)translation inView:(UIView *)view
+{
+    NSLog(@"Test to see if this method gets executed");
+}
+
+- (void)pan:(UIPanGestureRecognizer *)gesture
+{
+    NSLog(@"testing");
+}
+
+- (void) move:(UIPanGestureRecognizer *) gesture
+{
+    if (moving == YES) {
+        if (gesture.view != movingView)
+            return;
+    }
+    [self.view bringSubviewToFront:gesture.view];
+    UIView *t = gesture.view;
+    CGPoint location = [gesture translationInView:self.view];
+    if ([gesture state] == UIGestureRecognizerStateBegan) {
+        moving = YES;
+        movingView = gesture.view;
+        firstX = t.frame.origin.x;
+        firstY = t.frame.origin.y;
+    } else if ([gesture state] == UIGestureRecognizerStateChanged) {
+        CGRect r = t.frame;
+        NSLog(@"Moved %f %f", location.x, location.y);
+        r.origin.x = firstX + location.x;
+        r.origin.y = firstY + location.y;
+        t.frame = r;
+    } else if ([gesture state] == UIGestureRecognizerStateEnded) {
+        moving = NO;
+        //[self beginLogic];
+        [self beginLogic2];
+    }
+}
+
+- (void) setup
+{
+    UIImage *bg = [UIImage imageNamed:@"tweed"];
+   // UIImage *bg = [UIImage imageNamed:@"stardust"];
+
+    self.view.backgroundColor = [UIColor colorWithPatternImage:bg];
+    [self.view setOpaque:NO];
+    [[self.view layer] setOpaque:NO];
+    
+    debugLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, 40)];
+    debugLabel.text = @"debug text here";
+    debugLabel.font = [UIFont systemFontOfSize:16.0];
+    debugLabel.textColor = [UIColor redColor];
+    [self.view addSubview:debugLabel];
+    
+    [quote removeAllObjects];
+    quote = [[NSMutableDictionary alloc] init];
+    quote[@"quote"] = @"Silence is a source of great strength.";
+    quote[@"author"] = @"Lao Tzu";
+    quote[@"quote_location"]    = @"";
+    quote[@"author_source"]     = @"";
+    quote[@"author_url"]        = @"";
+
+    tileViews = [[NSMutableArray alloc] init];
+    NSArray *words = [quote[@"quote"] componentsSeparatedByString:@" "];
+    quote[@"words"] = [words copy];
+    
+    for (NSString *s in words) {
+        WordTile *tile = [[WordTile alloc] initWithFrame:CGRectMake(
+                      300,100,
+                      100,100)];
+        [self.view addSubview:tile];
+        
+        
+        CGRect fr = tile.frame;
+        fr.origin.x = (int)floor(rand() % (int)(self.view.bounds.size.width  - 60));
+        fr.origin.y = (int)floor(rand() % (int)(self.view.bounds.size.height - 60));
+        tile.frame = fr;
+        
+        [tile setString:s];
+        UIPanGestureRecognizer *panRecognizer = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(move:)];
+        [panRecognizer setMinimumNumberOfTouches:1];
+        [panRecognizer setMaximumNumberOfTouches:1];
+        [panRecognizer setDelegate:self];
+        [tile addGestureRecognizer:panRecognizer];
+        [tileViews addObject:tile];
+    }
+    
+    
+    WordTile *tile = [[WordTile alloc] initWithFrame:CGRectMake(
+                                                                300,100,
+                                                                100,100)];
+    [self.view addSubview:tile];
+    
+    CGRect fr = tile.frame;
+    fr.origin.x = (int)floor(rand() % (int)(self.view.bounds.size.width  - 60));
+    fr.origin.y = (int)floor(rand() % (int)(self.view.bounds.size.height - 60));
+    tile.frame = fr;
+    
+    [tile setString:[NSString stringWithFormat:@"-%@", quote[@"author"]]];
+    UIPanGestureRecognizer *panRecognizer = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(move:)];
+    [panRecognizer setMinimumNumberOfTouches:1];
+    [panRecognizer setMaximumNumberOfTouches:1];
+    [panRecognizer setDelegate:self];
+    [tile addGestureRecognizer:panRecognizer];
+    [tileViews addObject:tile];
+}
+
+- (void)viewDidLoad
+{
+    [super viewDidLoad];
+    self.navigationController.navigationBar.translucent = NO;
+    moving = NO;
+    [self setup];
+}
+
+- (void)didReceiveMemoryWarning
+{
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
+}
+
+/*
+#pragma mark - Navigation
+
+// In a storyboard-based application, you will often want to do a little preparation before navigation
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    // Get the new view controller using [segue destinationViewController].
+    // Pass the selected object to the new view controller.
+}
+*/
+
+@end
