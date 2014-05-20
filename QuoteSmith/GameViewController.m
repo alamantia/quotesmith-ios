@@ -466,11 +466,23 @@ float node_cost(CGPoint a, CGPoint b)
     [self presentViewController:win animated:YES completion:^{
         [win displayQuote];
     }];
+    
+    
+    return;
+}
+
+- (IBAction) hint : (id)sender
+{
+    // perform the hint logic here
     return;
 }
 
 - (void) setup
 {
+    
+    UIBarButtonItem *hintButton = [[UIBarButtonItem alloc] initWithTitle:@"Hint" style:UIBarButtonItemStylePlain target:self action:@selector(hint:)];
+    [[self navigationItem] setRightBarButtonItem:hintButton];
+
     won = NO;
     UIImage *bg = [UIImage imageNamed:@"tweed"];
     self.view.backgroundColor = [UIColor colorWithPatternImage:bg];
@@ -478,6 +490,8 @@ float node_cost(CGPoint a, CGPoint b)
     [self.view setOpaque:NO];
     [[self.view layer] setOpaque:NO];
     [self setupBoard];
+    
+    
 }
     
 - (void)viewDidLoad
@@ -486,6 +500,8 @@ float node_cost(CGPoint a, CGPoint b)
     self.navigationController.navigationBar.translucent = NO;
     moving = NO;
     [self setup];
+
+    
 }
 
 - (void)didReceiveMemoryWarning

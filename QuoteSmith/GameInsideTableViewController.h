@@ -9,5 +9,5 @@
 #import <UIKit/UIKit.h>
 
 @interface GameInsideTableViewController : UIViewController
-
+- (IBAction) hint : (id)sender;
 @end
