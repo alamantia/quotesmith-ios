@@ -8,9 +8,14 @@
 
 #import <UIKit/UIKit.h>
 
+@class GameViewController;
+
 @interface WinViewController : UIViewController <UIWebViewDelegate> {
     
 }
+@property (nonatomic, strong) GameViewController *delegate;
 @property (nonatomic, strong) NSDictionary *quote;
 - (void) displayQuote;
+- (void) displayBio:(CGPoint) p;
+
 @end

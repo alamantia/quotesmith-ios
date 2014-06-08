@@ -8,24 +8,36 @@
 #import "WinViewController.h"
 #import "UIColor+Expanded.h"
 #import "WIkipediaViewController.h"
+#import "GameViewController.h"
+
 #import "WordTile.h"
 
 @interface WinViewController () {
     UIButton *buttonNext;
     UIButton *buttonWikipedia;
+    
+    WordTile *authorTile;
+    
     NSMutableArray *tileArray;
     NSMutableArray *targetsArray;
     NSMutableArray *pendingTiles;
+    
     int animation_line;
+    
     UITextView *quoteInfo;
-    UIFont   * quoteFont;
-    UIColor  * quoteColor;
-    // bad practice but i'm lazy tonight!
+    UIFont     *quoteFont;
+    UIColor    *quoteColor;
+    
+    UIFont     *bioFont;
+    UIColor    *bioColor;
+    
     float cHeight;
+    float bioY;
     float cY;
     float cX;
-    int line;
+    int   line;
 }
+
 @end
 
 @implementation WinViewController
@@ -58,44 +70,102 @@
     }];
 }
 
+- (void) displayBio
+{
+    CGRect authorFrame = authorTile.frame;
+    bioColor   = [UIColor colorWithHexString:@"17b680"];
+    bioFont    = [UIFont fontWithName:@"AmericanTypewriter-Bold" size:24.0];
+
+    // grab (and probably verify) the bioString that is being used
+    NSString *bioString = self.quote[@"author_bio"];
+    NSLog(@"Quote String is %@", bioString);
+    
+    CGSize max = CGSizeMake(self.view.bounds.size.width - 40,
+                            self.view.bounds.size.height);
+    
+    UIView *tView = [[UIView alloc] initWithFrame:authorFrame];
+    tView.backgroundColor = [UIColor grayColor];
+    //[self.view addSubview:tView];
+    
+    CGRect labelRect = [bioString boundingRectWithSize:max options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:bioFont} context:nil];
+    
+    
+    UILabel *bioLabel = [[UILabel alloc] initWithFrame:CGRectMake((self.view.bounds.size.width/2) - (labelRect.size.width/2) , cY, labelRect.size.width, labelRect.size.height)];
+    bioLabel.font = bioFont;
+    bioLabel.textColor = bioColor;
+    bioLabel.numberOfLines = 0;
+    bioLabel.textColor = [UIColor blackColor];
+    bioLabel.text = bioString;
+    [self.view addSubview:bioLabel];
+    
+    
+    cY += labelRect.size.height;
+
+    /// Draw the wikipedia button .. Learn More about X
+    
+    NSString *wikiString = [NSString stringWithFormat:@"Learn more about %@",
+                            [self.quote objectForKey:@"author"]];
+    buttonWikipedia = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+    buttonWikipedia.frame = CGRectMake((self.view.bounds.size.width/2) - (labelRect.size.width/2), 140, 240, 30);
+    [buttonWikipedia addTarget:self action:@selector(wikipedia:) forControlEvents:UIControlEventTouchUpInside];
+    [buttonWikipedia setTitle:wikiString forState:UIControlStateNormal];
+    buttonWikipedia.titleLabel.font = [UIFont systemFontOfSize:24];
+    
+    
+    
+    CGRect titleLabelRect = [wikiString boundingRectWithSize:max options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:buttonWikipedia.titleLabel.font} context:nil];
+    buttonWikipedia.frame = CGRectMake((self.view.bounds.size.width/2) - (titleLabelRect.size.width/2),
+                                       cY,
+                                       titleLabelRect.size.width,
+                                       titleLabelRect.size.height);
+    
+    [buttonWikipedia setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    buttonWikipedia.backgroundColor = [UIColor redColor];
+    
+    [self.view addSubview:buttonWikipedia];
+
+    
+}
+
 // display some author detail
 - (void) displayAuthor
 {
     NSString *s = [NSString stringWithFormat:@"-%@",[self.quote objectForKey:@"author"]];
     CGSize max = CGSizeMake(self.view.bounds.size.width,
                             self.view.bounds.size.height);
-    CGRect titleLabelRect = [s boundingRectWithSize:max options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:quoteFont} context:nil];
     
-    float padding = 40;
+    CGRect titleLabelRect = [s boundingRectWithSize:max options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:quoteFont} context:nil];
+    float padding        = 40;
     float padding_height = 20;
     float t_y_offset = (self.view.bounds.size.height/4) - (cHeight * line);
+    t_y_offset = 80;
 
-    WordTile *t = [[WordTile alloc] initWithFrame:CGRectMake(self.view.bounds.size.width - titleLabelRect.size.width - padding,
+    authorTile = [[WordTile alloc] initWithFrame:CGRectMake(self.view.bounds.size.width - titleLabelRect.size.width - padding,
                                                              -100,
                                                              titleLabelRect.size.width,
                                                              titleLabelRect.size.height)];
     
-    t.mode = TILE_MODE_WIN;
-    [t setString:s];
-    [self.view addSubview:t];
+    authorTile.mode = TILE_MODE_WIN;
+    [authorTile setString:s];
+    [self.view addSubview:authorTile];
     
+    
+    
+    bioY = t_y_offset + cY + cHeight + padding_height;
     CGFloat damping = 0.60;
     [UIView animateWithDuration:0.20 delay:0 usingSpringWithDamping: damping  initialSpringVelocity: 1.0 options:0 animations:^{
-        t.frame = CGRectMake(self.view.bounds.size.width - titleLabelRect.size.width - padding,
-                             t_y_offset + cY + cHeight + padding_height,
+        authorTile.frame = CGRectMake(self.view.bounds.size.width - titleLabelRect.size.width - padding,
+                             bioY,
                              titleLabelRect.size.width,
                              titleLabelRect.size.height);
-        // update cY
-        cY = t_y_offset + cY + cHeight + padding_height + cHeight;
+        cY = t_y_offset + cY + cHeight + padding_height + titleLabelRect.size.height;
     } completion:^(BOOL finished) {
         if ([pendingTiles count] <= 0) {
+            [self displayBio];
             [self displayNext];
             return;
         }
-        [self dropTiles];
     }];
-
-    
 }
 
 - (WordTile *) randomPendingTile
@@ -112,9 +182,9 @@
 
 - (void) dropTiles {
     float t_y_offset = (self.view.bounds.size.height/4) - (cHeight * line);
+    t_y_offset = 80;
     WordTile *t = [self randomPendingTile];
     if (t == nil) {
-        [self displayNext];
         [self displayAuthor];
         return;
     }
@@ -123,13 +193,13 @@
         t.frame = CGRectMake(t.frame.origin.x, t.location.y + t_y_offset, t.frame.size.width, t.frame.size.height);
     } completion:^(BOOL finished) {
         if ([pendingTiles count] <= 0) {
-            [self displayNext];
             [self displayAuthor];
             return;
         }
         [self dropTiles];
     }];
 }
+
 
 - (void) displayQuote
 {
@@ -144,7 +214,8 @@
     cX      = margin_left;
     cY      = 0.0f;
     cHeight = 0.0f;
-    line = 0;
+    line    = 0;
+    
     CGSize max = CGSizeMake(self.view.bounds.size.width,
                             self.view.bounds.size.height);
     for (NSString *s in self.quote[@"words"]) {
@@ -170,7 +241,6 @@
     return;
 }
 
-// open a webview to the relevant wikipedia page
 - (void) wikipedia : (id) sender
 {
     WIkipediaViewController *wvc = [[WIkipediaViewController alloc] init];
@@ -185,7 +255,10 @@
 - (void) finished : (id) sender
 {
     buttonNext.hidden = YES;
-    [self dismissViewControllerAnimated:YES completion:nil];
+    [self dismissViewControllerAnimated:YES completion:^{
+        [self.delegate setupBoard];
+    }];
+    
 }
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -221,25 +294,6 @@
     buttonNext.alpha = 0.0;
     
     [self.view addSubview:buttonNext];
-
-    
-    NSString *wikiString = [NSString stringWithFormat:@"Learn more about %@",
-                            [self.quote objectForKey:@"author"]];
-    buttonWikipedia = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-    buttonWikipedia.frame = CGRectMake(0, 140, 240, 30);
-    [buttonWikipedia addTarget:self action:@selector(wikipedia:) forControlEvents:UIControlEventTouchUpInside];
-    [buttonWikipedia setTitle:wikiString forState:UIControlStateNormal];
-    buttonWikipedia.titleLabel.font = [UIFont systemFontOfSize:24];
-    
-    
-    titleLabelRect = [wikiString boundingRectWithSize:max options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:buttonWikipedia.titleLabel.font} context:nil];
-    buttonWikipedia.frame = CGRectMake(margin,
-                                  self.view.bounds.size.height - titleLabelRect.size.height - margin,
-                                  titleLabelRect.size.width,
-                                  titleLabelRect.size.height);
-
-    [self.view addSubview:buttonWikipedia];
-
 }
 
 - (void)didReceiveMemoryWarning

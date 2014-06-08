@@ -63,6 +63,8 @@
     
     [self addSubview:highlightView];
     label = [[UILabel alloc] init];
+    label.lineBreakMode = NSLineBreakByWordWrapping;
+    label.numberOfLines = 0;
     label.textColor = [UIColor whiteColor];
     label.font = [UIFont fontWithName:@"AmericanTypewriter-Bold" size:40.0];
     [self addSubview:label];

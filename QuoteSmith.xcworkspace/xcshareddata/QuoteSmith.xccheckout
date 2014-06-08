@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>24E1263B-9767-4734-B5CA-5DE5E76218BC</string>
+	<key>IDESourceControlProjectName</key>
+	<string>QuoteSmith</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>AE498297-2120-4045-8F9D-8A44E248A473</key>
+		<string>https://github.com/w4ffles/quotesmith-ios.git</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>QuoteSmith.xcworkspace</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>AE498297-2120-4045-8F9D-8A44E248A473</key>
+		<string>..</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>https://github.com/w4ffles/quotesmith-ios.git</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>110</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>AE498297-2120-4045-8F9D-8A44E248A473</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>AE498297-2120-4045-8F9D-8A44E248A473</string>
+			<key>IDESourceControlWCCName</key>
+			<string>QuoteSmith</string>
+		</dict>
+	</array>
+</dict>
+</plist>

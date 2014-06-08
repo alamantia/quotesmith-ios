@@ -12,10 +12,13 @@
 #import "TransitionManager.h"
 #import "WordTile.h"
 #import "UIColor+Expanded.h"
+#import "Quotes.h"
+
 unsigned int MIN_COST = 90;
 
 @interface GameViewController ()
 {
+    Quotes  *quotes;
     CGFloat lastScale;
     CGFloat lastRotation;
     
@@ -50,6 +53,7 @@ float node_cost(CGPoint a, CGPoint b)
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
+        quotes = [[Quotes alloc] init];
         self.transitionManager = [[TransitionManager alloc] init];
     }
     return self;
@@ -414,17 +418,9 @@ float node_cost(CGPoint a, CGPoint b)
 }
 
 - (NSDictionary *) grabQuote {
-    NSMutableDictionary *d = [[NSMutableDictionary alloc] init];
-    d[@"quote"] = @"Silence is a source of great strength.";
-    d[@"author"] = @"Lao Tzu";
-    d[@"quote_location"]    = @"";
-    d[@"author_source"]     = @"";
-    d[@"author_bio"]        = @"";
-    d[@"author_url"]        = @"https://en.wikipedia.org/wiki/Laozi";
-    NSArray *words = [d[@"quote"] componentsSeparatedByString:@" "];
-    d[@"words"] = [words copy];
-    quote = [d copy];
-    return d;
+    
+    quote = [[quotes randomQuote] copy];
+    return quote;
 }
 
 - (void) setupBoard
@@ -457,17 +453,6 @@ float node_cost(CGPoint a, CGPoint b)
         [tile addGestureRecognizer:panRecognizer];
         [tileViews addObject:tile];
     }
-    
-    WinViewController *win = [[WinViewController alloc] init];
-    win.transitioningDelegate = self;
-    win.quote = quote;
-    
-    win.modalPresentationStyle = UIModalPresentationCustom;
-    [self presentViewController:win animated:YES completion:^{
-        [win displayQuote];
-    }];
-    
-    
     return;
 }
 
@@ -477,12 +462,17 @@ float node_cost(CGPoint a, CGPoint b)
     return;
 }
 
+- (IBAction) skip : (id)sender
+{
+    [self clearBoard];
+    return;
+}
+
 - (void) setup
 {
-    
+    UIBarButtonItem *skipButton = [[UIBarButtonItem alloc] initWithTitle:@"Skip" style:UIBarButtonItemStylePlain target:self action:@selector(skip:)];
     UIBarButtonItem *hintButton = [[UIBarButtonItem alloc] initWithTitle:@"Hint" style:UIBarButtonItemStylePlain target:self action:@selector(hint:)];
-    [[self navigationItem] setRightBarButtonItem:hintButton];
-
+    [[self navigationItem] setRightBarButtonItems:@[hintButton, skipButton]];
     won = NO;
     UIImage *bg = [UIImage imageNamed:@"tweed"];
     self.view.backgroundColor = [UIColor colorWithPatternImage:bg];
@@ -490,18 +480,16 @@ float node_cost(CGPoint a, CGPoint b)
     [self.view setOpaque:NO];
     [[self.view layer] setOpaque:NO];
     [self setupBoard];
-    
-    
 }
-    
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    [quotes loadIndex];
+    [quotes randomQuote];
     self.navigationController.navigationBar.translucent = NO;
     moving = NO;
     [self setup];
-
-    
 }
 
 - (void)didReceiveMemoryWarning
@@ -514,6 +502,16 @@ float node_cost(CGPoint a, CGPoint b)
     
 }
 
+- (void) displayWin {
+    WinViewController *win = [[WinViewController alloc] init];
+    win.transitioningDelegate = self;
+    win.delegate = self;
+    win.quote = quote;
+    win.modalPresentationStyle = UIModalPresentationCustom;
+    [self presentViewController:win animated:YES completion:^{
+        [win displayQuote];
+    }];
+}
 - (void) clearBoard
 {
     for (WordTile *t in tileViews) {
@@ -521,14 +519,8 @@ float node_cost(CGPoint a, CGPoint b)
     }
     [fillViews removeAllObjects];
     [tileViews removeAllObjects];
-    [self setupBoard];
+    [self displayWin];
     won = NO;
-    
-    WinViewController *win = [[WinViewController alloc] init];
-    win.transitioningDelegate = self;
-    win.modalPresentationStyle = UIModalPresentationCustom;
-    [self presentViewController:win animated:YES completion:^{
-    }];
     return;
 }
 

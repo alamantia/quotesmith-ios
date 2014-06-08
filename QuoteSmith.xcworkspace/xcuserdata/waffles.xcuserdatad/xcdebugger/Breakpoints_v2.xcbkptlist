@@ -10,11 +10,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "QuoteSmith/WinViewController.m"
-            timestampString = "422258840.585832"
+            timestampString = "423874481.061094"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "56"
-            endingLineNumber = "56"
+            startingLineNumber = "68"
+            endingLineNumber = "68"
             landmarkName = "-displayNext"
             landmarkType = "5">
          </BreakpointContent>
@@ -26,11 +26,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "QuoteSmith/WinViewController.m"
-            timestampString = "422260286.425481"
+            timestampString = "423950861.833925"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "129"
-            endingLineNumber = "129"
+            startingLineNumber = "198"
+            endingLineNumber = "198"
             landmarkName = "-dropTiles"
             landmarkType = "5">
          </BreakpointContent>

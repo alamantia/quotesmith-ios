@@ -10,4 +10,6 @@
 
 @interface GameViewController : UIViewController <UIPageViewControllerDelegate, UIGestureRecognizerDelegate, UIViewControllerTransitioningDelegate>
 
+- (void) setupBoard;
+
 @end

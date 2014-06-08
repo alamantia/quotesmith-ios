@@ -32,11 +32,14 @@
 
 - (void) loadAddress : (NSString *) address
 {
+    address = [address stringByReplacingOccurrencesOfString:@" " withString:@"_"];
     webview = [[UIWebView alloc] initWithFrame:self.view.bounds];
     webview.delegate = self;
     webview.scalesPageToFit = YES;
     [webview loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:address]]];
      [self.view addSubview:webview];
+    
+    
     NSLog(@"Trying to load %@", address);
     
     activity = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
@@ -65,7 +68,12 @@
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+}
+
+- (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType
+{
+    NSLog(@"Direct to %@", request.URL.absoluteString);
+    return YES;
 }
 
 /*
