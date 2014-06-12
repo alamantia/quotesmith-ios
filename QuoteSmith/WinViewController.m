@@ -89,6 +89,8 @@
     
     CGRect labelRect = [bioString boundingRectWithSize:max options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:bioFont} context:nil];
     
+    cY = authorFrame.size.height + authorFrame.origin.y;
+    cY += 50;
     
     UILabel *bioLabel = [[UILabel alloc] initWithFrame:CGRectMake((self.view.bounds.size.width/2) - (labelRect.size.width/2) , cY, labelRect.size.width, labelRect.size.height)];
     bioLabel.font = bioFont;
@@ -100,31 +102,27 @@
     
     
     cY += labelRect.size.height;
-
+    cY += 50;
     /// Draw the wikipedia button .. Learn More about X
     
     NSString *wikiString = [NSString stringWithFormat:@"Learn more about %@",
                             [self.quote objectForKey:@"author"]];
     buttonWikipedia = [UIButton buttonWithType:UIButtonTypeRoundedRect];
     buttonWikipedia.frame = CGRectMake((self.view.bounds.size.width/2) - (labelRect.size.width/2), 140, 240, 30);
+    buttonWikipedia.titleLabel.numberOfLines = 0;
+
     [buttonWikipedia addTarget:self action:@selector(wikipedia:) forControlEvents:UIControlEventTouchUpInside];
     [buttonWikipedia setTitle:wikiString forState:UIControlStateNormal];
-    buttonWikipedia.titleLabel.font = [UIFont systemFontOfSize:24];
-    
-    
-    
+    buttonWikipedia.titleLabel.font = [UIFont systemFontOfSize:42];
+    buttonWikipedia.titleLabel.textAlignment = NSTextAlignmentCenter;
     CGRect titleLabelRect = [wikiString boundingRectWithSize:max options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:buttonWikipedia.titleLabel.font} context:nil];
     buttonWikipedia.frame = CGRectMake((self.view.bounds.size.width/2) - (titleLabelRect.size.width/2),
                                        cY,
                                        titleLabelRect.size.width,
                                        titleLabelRect.size.height);
-    
     [buttonWikipedia setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     buttonWikipedia.backgroundColor = [UIColor redColor];
-    
     [self.view addSubview:buttonWikipedia];
-
-    
 }
 
 // display some author detail
@@ -152,6 +150,7 @@
     
     
     bioY = t_y_offset + cY + cHeight + padding_height;
+    
     CGFloat damping = 0.60;
     [UIView animateWithDuration:0.20 delay:0 usingSpringWithDamping: damping  initialSpringVelocity: 1.0 options:0 animations:^{
         authorTile.frame = CGRectMake(self.view.bounds.size.width - titleLabelRect.size.width - padding,

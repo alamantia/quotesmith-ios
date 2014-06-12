@@ -12,6 +12,8 @@
 #import "TransitionManager.h"
 #import "WordTile.h"
 #import "UIColor+Expanded.h"
+#import "UIColor+HSV.h"
+
 #import "Quotes.h"
 
 unsigned int MIN_COST = 90;

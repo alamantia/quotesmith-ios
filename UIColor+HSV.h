@@ -25,7 +25,7 @@ void HSVtoRGB( float *r, float *g, float *b, float h, float s, float v );
  * value: 0.0 - 1.0
  * alpha: 0.0 - 1.0
  */
-+ (UIColor*)colorWithHue:(CGFloat)h saturation:(CGFloat)s value:(CGFloat)v alpha:(CGFloat)a;
++ (UIColor*)acolorWithHue:(CGFloat)h saturation:(CGFloat)s value:(CGFloat)v alpha:(CGFloat)a;
 
 /**
  * Accepted ranges:

@@ -92,7 +92,7 @@ void HSVtoRGB( float *r, float *g, float *b, float h, float s, float v ) {
 @implementation UIColor (HSV)
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
-+ (UIColor*)colorWithHue:(CGFloat)h saturation:(CGFloat)s value:(CGFloat)v alpha:(CGFloat)a {
++ (UIColor*)acolorWithHue:(CGFloat)h saturation:(CGFloat)s value:(CGFloat)v alpha:(CGFloat)a {
     CGFloat r, g, b;
     HSVtoRGB(&r, &g, &b, h, s, v);
     return [UIColor colorWithRed:r green:g blue:b alpha:a];

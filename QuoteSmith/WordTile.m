@@ -76,6 +76,7 @@
     self = [super initWithFrame:frame];
     if (self) {
         [self setup];
+        self.customColors = NO;
         self.line = 0;
         animating = NO;
     }
@@ -168,6 +169,12 @@
         self.backgroundColor = [UIColor clearColor];
         label.textColor = [UIColor blackColor];
     }
+    
+    if (self.customColors == YES) {
+        self.backgroundColor = self.bgColor;
+        label.textColor = self.fgColor;
+    }
+    
     self.frame = of;
 
     highlightView.frame = CGRectMake(0, 0, self.frame.size.width, self.frame.size.height);

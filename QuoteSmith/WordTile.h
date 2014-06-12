@@ -21,7 +21,12 @@ enum TILE_MODES {
 - (void) highlightGreen;
 - (void) highlightRed;
 - (void) addTweenTarget : (CGPoint) target;
+
 @property (nonatomic, assign) int mode;
 @property (nonatomic, assign) int line;
 @property (nonatomic, assign) CGPoint location;
+@property (nonatomic, assign) BOOL    customColors;
+@property (nonatomic, retain) UIColor *bgColor;
+@property (nonatomic, retain) UIColor *fgColor;
+
 @end

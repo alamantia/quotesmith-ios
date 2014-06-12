@@ -8,6 +8,8 @@
 
 #import "AppDelegate.h"
 #import "GameViewController.h"
+#import "ColorTestViewController.h"
+#import "MainMenuViewController.h"
 
 @implementation AppDelegate
 
@@ -18,7 +20,12 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     GameViewController *gvc = [[GameViewController alloc] init];
+    ColorTestViewController *cvc = [[ColorTestViewController alloc] init];
+    MainMenuViewController *mvc = [[MainMenuViewController alloc] init];
+
+    //UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:cvc];
     UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:gvc];
+    
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     // Override point for customization after application launch.
     self.window.rootViewController = nav;
