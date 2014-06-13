@@ -4,15 +4,27 @@
 //
 //  Created by waffles on 4/2/14.
 //  Copyright (c) 2014 Anthony LaMantia. All rights reserved.
-//
 
+#import <QuartzCore/QuartzCore.h>
 
+#import "CircleView.h"
 #import "GameViewController.h"
 #import "WinViewController.h"
 #import "TransitionManager.h"
 #import "WordTile.h"
 #import "UIColor+Expanded.h"
 #import "UIColor+HSV.h"
+#import "AppContext.h"
+
+#define ARC4RANDOM_MAX      0x100000000
+
+static float hsvStep = (1.0/360.0);
+
+struct HSV {
+    float H;
+    float S;
+    float V;
+};
 
 #import "Quotes.h"
 
@@ -27,6 +39,7 @@ unsigned int MIN_COST = 90;
     CGFloat firstX;
     CGFloat firstY;
     
+    NSMutableArray      *particles;
     NSMutableDictionary *quote;
     NSMutableArray      *tileViews;
     NSMutableArray      *fillViews;
@@ -37,11 +50,18 @@ unsigned int MIN_COST = 90;
     WordTile *movingView;
     UILabel *debugLabel;
     
+    UIColor *fgColor;
+    UIColor *bgColor;
+    
+    struct HSV bgHSV;
+    
 }
 @property (nonatomic, strong) TransitionManager *transitionManager;
 @end
 
 static bool won = NO;
+
+
 
 // adjust to case y alignment to be stronger.
 float node_cost(CGPoint a, CGPoint b)
@@ -50,6 +70,15 @@ float node_cost(CGPoint a, CGPoint b)
 }
 
 @implementation GameViewController
+
+- (float)randomFloat:(float)min maxNumber:(float)max
+{
+    float range = max - min;
+    float val = ((float)arc4random() / ARC4RANDOM_MAX) * range + min;
+    int val1 = val * 10;
+    float val2= (float)val1 / 10.0f;
+    return val2;
+}
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -425,15 +454,80 @@ float node_cost(CGPoint a, CGPoint b)
     return quote;
 }
 
+
+- (void) generateColors
+{
+    NSLog(@"Trying to update with new colors");
+    
+    float St = [self randomFloat:10 maxNumber:12];
+    float Vt = [self randomFloat:98 maxNumber:100];
+        
+    float H = [self randomFloat:0 maxNumber:360];
+    float S = St/100.0;
+    float V = Vt/100.0;
+        
+    NSLog(@"H %f S %f V %f", H, S, V);
+    
+    bgHSV.H = H;
+    bgHSV.S = S;
+    bgHSV.V = V;
+
+    bgColor = [UIColor acolorWithHue:H saturation:S value:V alpha:1.0];
+    
+    //S += 0.5;
+    //V += 0.5;
+    
+    // almost black but with a high contrast hue as a base
+    
+    S = 8.0/100.0;
+    V = 10.0/100.0;
+  
+    H += 180;
+    if (H > 360.0) {
+        H = H - 360;
+    }
+    
+    fgColor = [UIColor acolorWithHue:H saturation:S value:V alpha:1.0];
+    self.view.backgroundColor = bgColor;
+    self.navigationController.navigationBar.barTintColor = bgColor;
+    self.navigationController.navigationBar.tintColor = fgColor;
+    self.navigationController.topViewController.title = @"Quote Smith";
+
+    [AppContext sharedContext].fgColor = fgColor;
+    [AppContext sharedContext].bgColor = bgColor;
+}
+
+// build up some particles to use as background effects
+- (void) buildParticles
+{
+    CircleView *cv = nil;
+    
+    // Set the required modified colors so we an make a decent use of the
+    cv = [[CircleView alloc] initWithFrame:CGRectMake(40,40, 128, 128)];
+    cv.backgroundColor = [UIColor acolorWithHue:bgHSV.H
+                                     saturation:bgHSV.S-8
+                                          value:bgHSV.V+30
+                                          alpha:1.0];
+    cv.userInteractionEnabled = NO;
+    [self.view addSubview:cv];
+    [cv animate];
+    
+    return;
+}
+
 - (void) setupBoard
 {
+    [self generateColors];
+    [self buildParticles];
+
     [backgroundTimer invalidate];
     backgroundTimer = nil;
     backgroundTimer = [NSTimer scheduledTimerWithTimeInterval:1
                                              target:self
-                                           selector:@selector(backgroundTimerTick:)
-                                           userInfo:nil
-                                           repeats:YES];
+                                             selector:@selector(backgroundTimerTick:)
+                                             userInfo:nil
+                                             repeats:YES];
+    
     [self grabQuote];
     tileViews = [[NSMutableArray alloc] init];
     for (NSString *s in quote[@"words"]) {
@@ -441,6 +535,10 @@ float node_cost(CGPoint a, CGPoint b)
                           CGRectMake(
                                                                     300,100,
                                                                     100,100)];
+        tile.customColors = YES;
+        tile.fgColor = [[AppContext sharedContext] fgColor];
+        tile.bgColor = [[AppContext sharedContext] bgColor];
+        
         tile.mode = TILE_MODE_GAME;
         [self.view addSubview:tile];
         CGRect fr = tile.frame;
@@ -504,13 +602,27 @@ float node_cost(CGPoint a, CGPoint b)
     
 }
 
+- (void) viewWillAppear:(BOOL)animated
+{
+    CGRect fr = self.navigationController.navigationBar.frame;
+    fr.size.height = 700;
+    self.navigationController.navigationBar.frame = fr;
+
+}
 - (void) displayWin {
     WinViewController *win = [[WinViewController alloc] init];
-    win.transitioningDelegate = self;
+    win.view.backgroundColor = [[AppContext sharedContext] bgColor];
+
     win.delegate = self;
     win.quote = quote;
     win.modalPresentationStyle = UIModalPresentationCustom;
-    [self presentViewController:win animated:YES completion:^{
+    //win.transitioningDelegate = self;
+
+    UINavigationController *n = [[UINavigationController alloc] initWithRootViewController:win];
+    n.transitioningDelegate = self;
+    n.modalPresentationStyle = UIModalPresentationCustom;
+    
+    [self presentViewController:n animated:YES completion:^{
         [win displayQuote];
     }];
 }
@@ -528,7 +640,6 @@ float node_cost(CGPoint a, CGPoint b)
 
 - (void) performWin
 {
-    
     [UIView animateWithDuration:0.3f
                           delay:0.0f
                         options:UIViewAnimationOptionAllowUserInteraction
@@ -540,7 +651,6 @@ float node_cost(CGPoint a, CGPoint b)
                      completion:^(BOOL finished) {
                          [self clearBoard];
                      }];
-    
 }
 
 - (void) hint

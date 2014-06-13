@@ -9,6 +9,7 @@
 #import "UIColor+Expanded.h"
 #import "WIkipediaViewController.h"
 #import "GameViewController.h"
+#import "AppContext.h"
 
 #import "WordTile.h"
 
@@ -36,12 +37,27 @@
     float cY;
     float cX;
     int   line;
+    
+    UIScrollView *sv;
 }
 
 @end
 
 @implementation WinViewController
 
+- (void) viewWillAppear:(BOOL)animated
+{
+    self.navigationController.navigationBar.translucent = NO;
+    self.navigationController.navigationBar.barTintColor = [AppContext sharedContext].bgColor;
+    self.navigationController.navigationBar.tintColor = [AppContext sharedContext].fgColor;
+    self.navigationController.topViewController.title = @"Quote Smith";
+    
+    UIBarButtonItem *nextButton = [[UIBarButtonItem alloc] initWithTitle:@"Next" style:UIBarButtonItemStylePlain target:self action:@selector(finished:)];
+    [[self navigationItem] setRightBarButtonItems:@[nextButton]];
+
+    
+
+}
 - (WordTile *) startTileWithString : (NSString *) s : (int) x : (int) y
 {
     // compute this again here so the size isn't adjusted durring animation (should move to wordtile but w\e)
@@ -57,7 +73,7 @@
     fr.origin.y = -100; // inital x position higher up
     t.frame = fr;
     [t setString:s];
-    [self.view addSubview:t];
+    [sv addSubview:t];
     return t;
 }
 
@@ -74,7 +90,7 @@
 {
     CGRect authorFrame = authorTile.frame;
     bioColor   = [UIColor colorWithHexString:@"17b680"];
-    bioFont    = [UIFont fontWithName:@"AmericanTypewriter-Bold" size:24.0];
+    bioFont    = [[AppContext sharedContext] fontForType:FONT_TYPE_BIO];
 
     // grab (and probably verify) the bioString that is being used
     NSString *bioString = self.quote[@"author_bio"];
@@ -94,11 +110,12 @@
     
     UILabel *bioLabel = [[UILabel alloc] initWithFrame:CGRectMake((self.view.bounds.size.width/2) - (labelRect.size.width/2) , cY, labelRect.size.width, labelRect.size.height)];
     bioLabel.font = bioFont;
+    
     bioLabel.textColor = bioColor;
     bioLabel.numberOfLines = 0;
-    bioLabel.textColor = [UIColor blackColor];
+    bioLabel.textColor = [[AppContext sharedContext] fgColor];
     bioLabel.text = bioString;
-    [self.view addSubview:bioLabel];
+    [sv addSubview:bioLabel];
     
     
     cY += labelRect.size.height;
@@ -113,7 +130,7 @@
 
     [buttonWikipedia addTarget:self action:@selector(wikipedia:) forControlEvents:UIControlEventTouchUpInside];
     [buttonWikipedia setTitle:wikiString forState:UIControlStateNormal];
-    buttonWikipedia.titleLabel.font = [UIFont systemFontOfSize:42];
+    buttonWikipedia.titleLabel.font = [[AppContext sharedContext] fontForType:FONT_TYPE_TILE];
     buttonWikipedia.titleLabel.textAlignment = NSTextAlignmentCenter;
     CGRect titleLabelRect = [wikiString boundingRectWithSize:max options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:buttonWikipedia.titleLabel.font} context:nil];
     buttonWikipedia.frame = CGRectMake((self.view.bounds.size.width/2) - (titleLabelRect.size.width/2),
@@ -122,7 +139,8 @@
                                        titleLabelRect.size.height);
     [buttonWikipedia setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     buttonWikipedia.backgroundColor = [UIColor redColor];
-    [self.view addSubview:buttonWikipedia];
+    [sv addSubview:buttonWikipedia];
+    sv.contentSize = CGSizeMake(self.view.frame.size.width, cY + titleLabelRect.size.height + 80);
 }
 
 // display some author detail
@@ -136,16 +154,25 @@
     float padding        = 40;
     float padding_height = 20;
     float t_y_offset = (self.view.bounds.size.height/4) - (cHeight * line);
-    t_y_offset = 80;
 
-    authorTile = [[WordTile alloc] initWithFrame:CGRectMake(self.view.bounds.size.width - titleLabelRect.size.width - padding,
+    if ( UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone ) {
+        t_y_offset = 10;
+    } else {
+        t_y_offset = 80;
+    }
+
+    
+    authorTile = [[WordTile alloc] initWithFrame:CGRectMake(self.view.bounds.size.width - titleLabelRect.size.width,
                                                              -100,
                                                              titleLabelRect.size.width,
                                                              titleLabelRect.size.height)];
     
+    authorTile.customColors = YES;
+    authorTile.fgColor = [[AppContext sharedContext] fgColor];
+    authorTile.bgColor = [UIColor clearColor];
     authorTile.mode = TILE_MODE_WIN;
     [authorTile setString:s];
-    [self.view addSubview:authorTile];
+    [sv addSubview:authorTile];
     
     
     
@@ -181,7 +208,11 @@
 
 - (void) dropTiles {
     float t_y_offset = (self.view.bounds.size.height/4) - (cHeight * line);
-    t_y_offset = 80;
+    if ( UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone ) {
+        t_y_offset = 10;
+    } else {
+        t_y_offset = 80;
+    }
     WordTile *t = [self randomPendingTile];
     if (t == nil) {
         [self displayAuthor];
@@ -199,15 +230,15 @@
     }];
 }
 
-
 - (void) displayQuote
 {
+    self.view.backgroundColor = [[AppContext sharedContext] bgColor];
     tileArray    = [[NSMutableArray alloc] init];
     targetsArray = [[NSMutableArray alloc] init];
     pendingTiles = [[NSMutableArray alloc] init];
 
     quoteColor   = [UIColor colorWithHexString:@"17b680"];
-    quoteFont    = [UIFont fontWithName:@"AmericanTypewriter-Bold" size:40.0];
+    quoteFont    = [[AppContext sharedContext] fontForType:FONT_TYPE_TILE];
     float spacing = 10.0f;
     float margin_left = 20.0;
     cX      = margin_left;
@@ -223,13 +254,18 @@
                               titleLabelRect.size.width,
                               titleLabelRect.size.height);
         cHeight = titleLabelRect.size.height;
-        if ((cX + titleLabelRect.size.height + margin_left) > self.view.frame.size.width) {
+        if ((cX + titleLabelRect.size.height + margin_left) > (self.view.frame.size.width - 40)) {
             cX  = margin_left;
             line = line + 1;
             cY += cHeight;
         }
         WordTile *t = [self startTileWithString:s:cX :cY];
         t.line = line;
+        
+        t.customColors = YES;
+        t.fgColor = [[AppContext sharedContext] fgColor];
+        t.bgColor = [[AppContext sharedContext] bgColor];
+
         t.location = CGPointMake(cX, cY);
         [tileArray addObject:t];
         [pendingTiles addObject:t];
@@ -254,8 +290,8 @@
 - (void) finished : (id) sender
 {
     buttonNext.hidden = YES;
+    [self.delegate setupBoard];
     [self dismissViewControllerAnimated:YES completion:^{
-        [self.delegate setupBoard];
     }];
     
 }
@@ -271,14 +307,18 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    sv = [[UIScrollView alloc] initWithFrame:self.view.frame];
+    sv.backgroundColor = [UIColor clearColor];
+    [self.view addSubview:sv];
+    
     quoteColor   = [UIColor colorWithHexString:@"17b680"];
-    quoteFont    = [UIFont fontWithName:@"AmericanTypewriter-Bold" size:40.0];
+    quoteFont    = [[AppContext sharedContext] fontForType:FONT_TYPE_TILE];
 
     float margin= 20.0;
     buttonNext = [UIButton buttonWithType:UIButtonTypeRoundedRect];
     buttonNext.frame = CGRectMake(40, 140, 240, 30);
     [buttonNext addTarget:self action:@selector(finished:) forControlEvents:UIControlEventTouchUpInside];
-    [buttonNext setTitle:@"Next" forState:UIControlStateNormal];
+    [buttonNext setTitle:@"" forState:UIControlStateNormal];
     buttonNext.titleLabel.font = [UIFont systemFontOfSize:46.0];
     
     CGSize max = CGSizeMake(self.view.bounds.size.width,
@@ -292,7 +332,7 @@
     buttonNext.opaque = NO;
     buttonNext.alpha = 0.0;
     
-    [self.view addSubview:buttonNext];
+    [sv addSubview:buttonNext];
 }
 
 - (void)didReceiveMemoryWarning

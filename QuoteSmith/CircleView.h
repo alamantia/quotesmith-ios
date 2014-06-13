@@ -10,4 +10,6 @@
 
 @interface CircleView : UIView
 
+- (void) animate;
+
 @end

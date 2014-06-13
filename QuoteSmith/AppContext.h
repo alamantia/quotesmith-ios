@@ -8,6 +8,23 @@
 
 #import <Foundation/Foundation.h>
 
+enum FONT_TYPES {
+    FONT_TYPE_TILE,
+    FONT_TYPE_BIO,
+    FONT_TYPE_BUTTON,
+};
+
 @interface AppContext : NSObject
+
+@property (nonatomic, retain) UIFont *labelFont;
+
+
+- (float) fontSizeForType : (int) fontType;
+- (UIFont *) fontForType : (int) fontType;
+
+@property (nonatomic, retain) UIColor *fgColor;
+@property (nonatomic, retain) UIColor *bgColor;
+
++ (AppContext *) sharedContext;
 
 @end

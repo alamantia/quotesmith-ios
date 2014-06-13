@@ -30,11 +30,6 @@ static float hsvStep = (1.0/360.0);
  
  */
 
-struct HSV {
-    float H;
-    float S;
-    float V;
-};
 
 @interface ColorTestViewController () {
     UIView *v1;

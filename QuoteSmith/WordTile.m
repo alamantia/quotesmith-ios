@@ -9,6 +9,7 @@
 #import <QuartzCore/QuartzCore.h>
 #import "UIColor+Expanded.h"
 #import "WordTile.h"
+#import "AppContext.h"
 
 @interface WordTile () {
     UIView    *highlightView;
@@ -58,15 +59,14 @@
     self.backgroundColor = [UIColor colorWithHexString:@"17b680"];
     str = @"Internet";
     highlightView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 0, 0)];
-    highlightView.opaque = NO;
+    highlightView.opaque          = NO;
     highlightView.backgroundColor = [UIColor clearColor];
     
     [self addSubview:highlightView];
     label = [[UILabel alloc] init];
-    label.lineBreakMode = NSLineBreakByWordWrapping;
     label.numberOfLines = 0;
     label.textColor = [UIColor whiteColor];
-    label.font = [UIFont fontWithName:@"AmericanTypewriter-Bold" size:40.0];
+    label.font = [[AppContext sharedContext] fontForType:FONT_TYPE_TILE];
     [self addSubview:label];
     return;
 }
@@ -98,7 +98,9 @@
                           delay:0.0f
                         options:UIViewAnimationOptionAllowUserInteraction
                      animations:^{
-                         highlightView.backgroundColor = [UIColor colorWithHexString:@"00ff00"];
+                         //highlightView.backgroundColor = [UIColor colorWithHexString:@"00ff00"];
+                         highlightView.backgroundColor = [UIColor colorWithHexString:@"ffffff"];
+
                          highlightView.alpha = 0.60;
                      }
                      completion:^(BOOL finished) {
@@ -162,7 +164,7 @@
     label.frame = frame;
     
     CGRect of = self.frame;
-    of.size.width = expected.width +2;
+    of.size.width = expected.width +8;
     of.size.height = expected.height;
     
     if (self.mode == TILE_MODE_WIN) {
@@ -173,6 +175,11 @@
     if (self.customColors == YES) {
         self.backgroundColor = self.bgColor;
         label.textColor = self.fgColor;
+        if (self.mode == TILE_MODE_GAME) {
+            self.layer.borderColor = self.fgColor.CGColor;
+            self.backgroundColor = [UIColor clearColor];
+            self.layer.borderWidth = 1.0;
+        }
     }
     
     self.frame = of;
