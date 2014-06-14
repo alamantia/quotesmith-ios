@@ -7,6 +7,7 @@
 
 #import <QuartzCore/QuartzCore.h>
 
+#import "AppDelegate.h"
 #import "CircleView.h"
 #import "GameViewController.h"
 #import "WinViewController.h"
@@ -15,17 +16,13 @@
 #import "UIColor+Expanded.h"
 #import "UIColor+HSV.h"
 #import "AppContext.h"
+#import "NavBarButton.h"
 
 #define ARC4RANDOM_MAX      0x100000000
 
+#define OPTIONS_HEIGHT      44.0
+
 static float hsvStep = (1.0/360.0);
-
-struct HSV {
-    float H;
-    float S;
-    float V;
-};
-
 #import "Quotes.h"
 
 unsigned int MIN_COST = 90;
@@ -33,6 +30,7 @@ unsigned int MIN_COST = 90;
 @interface GameViewController ()
 {
     Quotes  *quotes;
+    BOOL showingOptions;
     CGFloat lastScale;
     CGFloat lastRotation;
     
@@ -54,14 +52,17 @@ unsigned int MIN_COST = 90;
     UIColor *bgColor;
     
     struct HSV bgHSV;
+    UIScrollView *sv;
     
+    // some misplaced stuff for the optionsView
+    UIView *optionsView;
+    UIToolbar *optionsToolbar;
 }
+
 @property (nonatomic, strong) TransitionManager *transitionManager;
 @end
 
 static bool won = NO;
-
-
 
 // adjust to case y alignment to be stronger.
 float node_cost(CGPoint a, CGPoint b)
@@ -70,6 +71,16 @@ float node_cost(CGPoint a, CGPoint b)
 }
 
 @implementation GameViewController
+
+- (void) setupOptionsView
+{
+    // the same color setting the the learn more wikipedia button (for now)
+    optionsView.backgroundColor = [UIColor  acolorWithHue:bgHSV.H saturation:bgHSV.S value:bgHSV.V-0.1 alpha:1.0];
+    optionsToolbar.translucent = YES;
+    optionsToolbar.barTintColor = [UIColor  acolorWithHue:bgHSV.H saturation:bgHSV.S value:bgHSV.V-0.1 alpha:1.0];
+    optionsToolbar.tintColor = [UIColor blackColor];
+    return;
+}
 
 - (float)randomFloat:(float)min maxNumber:(float)max
 {
@@ -423,9 +434,9 @@ float node_cost(CGPoint a, CGPoint b)
         if (gesture.view != movingView)
             return;
     }
-    [self.view bringSubviewToFront:gesture.view];
+    [sv bringSubviewToFront:gesture.view];
     UIView *t = gesture.view;
-    CGPoint location = [gesture translationInView:self.view];
+    CGPoint location = [gesture translationInView:sv];
     if ([gesture state] == UIGestureRecognizerStateBegan) {
         moving = YES;
         movingView = gesture.view;
@@ -488,6 +499,7 @@ float node_cost(CGPoint a, CGPoint b)
     }
     
     fgColor = [UIColor acolorWithHue:H saturation:S value:V alpha:1.0];
+    sv.backgroundColor = bgColor;
     self.view.backgroundColor = bgColor;
     self.navigationController.navigationBar.barTintColor = bgColor;
     self.navigationController.navigationBar.tintColor = fgColor;
@@ -505,11 +517,11 @@ float node_cost(CGPoint a, CGPoint b)
     // Set the required modified colors so we an make a decent use of the
     cv = [[CircleView alloc] initWithFrame:CGRectMake(40,40, 128, 128)];
     cv.backgroundColor = [UIColor acolorWithHue:bgHSV.H
-                                     saturation:bgHSV.S-8
-                                          value:bgHSV.V+30
+                                     saturation:bgHSV.S-0.15
+                                          value:bgHSV.V
                                           alpha:1.0];
     cv.userInteractionEnabled = NO;
-    [self.view addSubview:cv];
+    [sv addSubview:cv];
     [cv animate];
     
     return;
@@ -519,6 +531,7 @@ float node_cost(CGPoint a, CGPoint b)
 {
     [self generateColors];
     [self buildParticles];
+    [self setupOptionsView];
 
     [backgroundTimer invalidate];
     backgroundTimer = nil;
@@ -540,7 +553,7 @@ float node_cost(CGPoint a, CGPoint b)
         tile.bgColor = [[AppContext sharedContext] bgColor];
         
         tile.mode = TILE_MODE_GAME;
-        [self.view addSubview:tile];
+        [sv addSubview:tile];
         CGRect fr = tile.frame;
         fr.origin.x = (int)floor(rand() % (int)(self.view.bounds.size.width  - 60));
         fr.origin.y = (int)floor(rand() % (int)(self.view.bounds.size.height - 60));
@@ -567,12 +580,56 @@ float node_cost(CGPoint a, CGPoint b)
     [self clearBoard];
     return;
 }
+- (void) viewDidDisappear:(BOOL)animated
+{
+
+}
+
+- (void) hideOptions
+{
+    if (showingOptions == YES) {
+        [UIView animateWithDuration:0.25 animations:^{
+            CGRect fr = sv.frame;
+            fr.origin.y -= OPTIONS_HEIGHT;
+            sv.frame = fr;
+            sv.userInteractionEnabled = YES;
+            showingOptions = NO;
+        } completion:^(BOOL finished) {
+            
+        }];
+    }
+}
+- (IBAction) expand: (NSNotification *)notification
+{
+    NSLog(@"Sending");
+    [UIView animateWithDuration:0.25 animations:^{
+        if (showingOptions == NO) {
+            CGRect fr = sv.frame;
+            fr.origin.y += OPTIONS_HEIGHT;
+            sv.frame = fr;
+            sv.userInteractionEnabled = NO;
+            showingOptions = YES;
+        } else {
+            CGRect fr = sv.frame;
+            fr.origin.y -= OPTIONS_HEIGHT;
+            sv.frame = fr;
+            sv.userInteractionEnabled = YES;
+            showingOptions = NO;
+        }
+    } completion:^(BOOL finished) {
+        
+    }];
+    return;
+}
 
 - (void) setup
 {
-    UIBarButtonItem *skipButton = [[UIBarButtonItem alloc] initWithTitle:@"Skip" style:UIBarButtonItemStylePlain target:self action:@selector(skip:)];
-    UIBarButtonItem *hintButton = [[UIBarButtonItem alloc] initWithTitle:@"Hint" style:UIBarButtonItemStylePlain target:self action:@selector(hint:)];
-    [[self navigationItem] setRightBarButtonItems:@[hintButton, skipButton]];
+    NavBarButton *settingsView = [[NavBarButton alloc] initWithFrame:CGRectMake(0, 0, 40, 44)];
+    [settingsView addTarget:self action:@selector(expand:) forControlEvents:UIControlEventTouchUpInside];
+    [settingsView setBackgroundImage:[UIImage imageNamed:@"icon_40820"] forState:UIControlStateNormal];
+    
+    UIBarButtonItem *expandButton = [[UIBarButtonItem alloc] initWithCustomView:settingsView];
+    [[self navigationItem] setRightBarButtonItems:@[expandButton]];
     won = NO;
     UIImage *bg = [UIImage imageNamed:@"tweed"];
     self.view.backgroundColor = [UIColor colorWithPatternImage:bg];
@@ -582,9 +639,27 @@ float node_cost(CGPoint a, CGPoint b)
     [self setupBoard];
 }
 
+- (void) populateOptionsView {
+    UIBarButtonItem *skipButton = [[UIBarButtonItem alloc] initWithTitle:@"Skip" style:UIBarButtonItemStylePlain target:self action:@selector(skip:)];
+    UIBarButtonItem *hintButton = [[UIBarButtonItem alloc] initWithTitle:@"Hint" style:UIBarButtonItemStylePlain target:self action:@selector(hint:)];
+
+    optionsToolbar = [[UIToolbar alloc] initWithFrame:optionsView.frame];
+    [optionsToolbar setItems:@[skipButton, hintButton] animated:YES];
+    [optionsView addSubview:optionsToolbar];
+    
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    optionsView = [[UIView alloc] initWithFrame:CGRectMake(0,0, self.view.frame.size.width, OPTIONS_HEIGHT)];
+    [self.view addSubview:optionsView];
+    [self populateOptionsView];
+    
+    sv = [[UIScrollView alloc] initWithFrame:self.view.frame];
+    sv.backgroundColor = [UIColor clearColor];
+    sv.contentSize = CGSizeMake(self.view.frame.size.width, self.view.frame.size.height);
+    [self.view addSubview:sv];
     [quotes loadIndex];
     [quotes randomQuote];
     self.navigationController.navigationBar.translucent = NO;
@@ -604,24 +679,24 @@ float node_cost(CGPoint a, CGPoint b)
 
 - (void) viewWillAppear:(BOOL)animated
 {
+    showingOptions = NO;
     CGRect fr = self.navigationController.navigationBar.frame;
     fr.size.height = 700;
     self.navigationController.navigationBar.frame = fr;
-
 }
+
 - (void) displayWin {
     WinViewController *win = [[WinViewController alloc] init];
     win.view.backgroundColor = [[AppContext sharedContext] bgColor];
-
+    win.bgHSV = bgHSV;
     win.delegate = self;
     win.quote = quote;
     win.modalPresentationStyle = UIModalPresentationCustom;
-    //win.transitioningDelegate = self;
-
     UINavigationController *n = [[UINavigationController alloc] initWithRootViewController:win];
     n.transitioningDelegate = self;
     n.modalPresentationStyle = UIModalPresentationCustom;
     
+    [self hideOptions];
     [self presentViewController:n animated:YES completion:^{
         [win displayQuote];
     }];

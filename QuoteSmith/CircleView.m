@@ -11,8 +11,29 @@
 #import <QuartzCore/QuartzCore.h>
 #import "CircleView.h"
 
+@interface CircleView () {
+    CABasicAnimation *radiusMaxAnimation;
+    CABasicAnimation *radiusMinAnimation;
+}
+@end
+
 @implementation CircleView
 
+- (void) defineAnimations {
+    // define the corner radius animations
+    radiusMaxAnimation = [CABasicAnimation animationWithKeyPath:@"cornerRadius"];
+    radiusMaxAnimation.fromValue = [NSNumber numberWithFloat:0.0];
+    radiusMaxAnimation.toValue = [NSNumber numberWithFloat:65.0];
+    radiusMaxAnimation.duration = 10.0f;
+    [self.layer addAnimation:radiusMaxAnimation forKey:@"radiusMax"];
+    
+    radiusMinAnimation = [CABasicAnimation animationWithKeyPath:@"cornerRadius"];
+    radiusMaxAnimation.fromValue = [NSNumber numberWithFloat:65.0];
+    radiusMaxAnimation.toValue = [NSNumber numberWithFloat:0.0];
+    radiusMinAnimation.duration = 10.0f;
+    
+    [self.layer addAnimation:radiusMaxAnimation forKey:@"radiusMin"];
+}
 - (id)initWithFrame:(CGRect)frame
 {
     self = [super initWithFrame:frame];
@@ -20,6 +41,7 @@
         // Initialization code
         self.alpha = 0.5;
         self.layer.cornerRadius = 65;
+        [self defineAnimations];
     }
     return self;
 }

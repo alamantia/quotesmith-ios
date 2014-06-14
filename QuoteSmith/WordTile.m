@@ -152,6 +152,8 @@
 }
 
 - (void) layoutSubviews {
+    float viewPadding = 10.0f;
+    
     self.layer.borderColor = [UIColor blackColor].CGColor;
     self.layer.borderWidth = 0.0f;
     
@@ -160,7 +162,7 @@
     CGSize expected = [label.text sizeWithFont:label.font constrainedToSize:max lineBreakMode:label.lineBreakMode];
 
     CGRect frame;
-    frame = CGRectMake(0,1, expected.width, expected.height);
+    frame = CGRectMake(0,0, expected.width, expected.height);
     label.frame = frame;
     
     CGRect of = self.frame;

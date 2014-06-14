@@ -10,7 +10,7 @@
 #import "WIkipediaViewController.h"
 #import "GameViewController.h"
 #import "AppContext.h"
-
+#import "UIColor+HSV.h"
 #import "WordTile.h"
 
 @interface WinViewController () {
@@ -18,7 +18,7 @@
     UIButton *buttonWikipedia;
     
     WordTile *authorTile;
-    
+    UILabel *authorView;
     NSMutableArray *tileArray;
     NSMutableArray *targetsArray;
     NSMutableArray *pendingTiles;
@@ -88,7 +88,7 @@
 
 - (void) displayBio
 {
-    CGRect authorFrame = authorTile.frame;
+    CGRect authorFrame = authorView.frame;
     bioColor   = [UIColor colorWithHexString:@"17b680"];
     bioFont    = [[AppContext sharedContext] fontForType:FONT_TYPE_BIO];
 
@@ -137,8 +137,13 @@
                                        cY,
                                        titleLabelRect.size.width,
                                        titleLabelRect.size.height);
-    [buttonWikipedia setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    buttonWikipedia.backgroundColor = [UIColor redColor];
+    [buttonWikipedia setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    buttonWikipedia.layer.borderColor = [UIColor blackColor].CGColor;
+    buttonWikipedia.layer.borderWidth = 1.0;
+    
+    
+    buttonWikipedia.backgroundColor = [UIColor  acolorWithHue:self.bgHSV.H saturation:self.bgHSV.S value:self.bgHSV.V-0.2 alpha:1.0];
+    
     [sv addSubview:buttonWikipedia];
     sv.contentSize = CGSizeMake(self.view.frame.size.width, cY + titleLabelRect.size.height + 80);
 }
@@ -146,11 +151,12 @@
 // display some author detail
 - (void) displayAuthor
 {
-    NSString *s = [NSString stringWithFormat:@"-%@",[self.quote objectForKey:@"author"]];
-    CGSize max = CGSizeMake(self.view.bounds.size.width,
+    UIFont *authorFont = [UIFont fontWithName:@"Futura-MediumItalic" size:24.0];
+    
+    NSString *s = [NSString stringWithFormat:@"%@",[self.quote objectForKey:@"author"]];
+    CGSize max = CGSizeMake(self.view.bounds.size.width - 80,
                             self.view.bounds.size.height);
     
-    CGRect titleLabelRect = [s boundingRectWithSize:max options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:quoteFont} context:nil];
     float padding        = 40;
     float padding_height = 20;
     float t_y_offset = (self.view.bounds.size.height/4) - (cHeight * line);
@@ -160,31 +166,30 @@
     } else {
         t_y_offset = 80;
     }
-
     
-    authorTile = [[WordTile alloc] initWithFrame:CGRectMake(self.view.bounds.size.width - titleLabelRect.size.width,
-                                                             -100,
-                                                             titleLabelRect.size.width,
-                                                             titleLabelRect.size.height)];
+    CGRect authorFrameRect = [s boundingRectWithSize:max options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:authorFont} context:nil];
+    CGRect authorFrame;
+    authorFrame.origin.x = self.view.bounds.size.width - authorFrameRect.size.width - 20;
+    authorFrame.origin.y = -100;
+    authorFrame.size.width = authorFrameRect.size.width;
+    authorFrame.size.height = authorFrameRect.size.height;
     
-    authorTile.customColors = YES;
-    authorTile.fgColor = [[AppContext sharedContext] fgColor];
-    authorTile.bgColor = [UIColor clearColor];
-    authorTile.mode = TILE_MODE_WIN;
-    [authorTile setString:s];
-    [sv addSubview:authorTile];
+    authorView = [[UILabel alloc] initWithFrame:authorFrame];
+    authorView.textColor = [[AppContext sharedContext] fgColor];
+    authorView.font = authorFont;
+    authorView.numberOfLines = 0;
+    authorView.text = s;
     
-    
-    
+    [sv addSubview:authorView];
     bioY = t_y_offset + cY + cHeight + padding_height;
     
     CGFloat damping = 0.60;
     [UIView animateWithDuration:0.20 delay:0 usingSpringWithDamping: damping  initialSpringVelocity: 1.0 options:0 animations:^{
-        authorTile.frame = CGRectMake(self.view.bounds.size.width - titleLabelRect.size.width - padding,
+        authorView.frame = CGRectMake(self.view.bounds.size.width - authorFrameRect.size.width - 20,
                              bioY,
-                             titleLabelRect.size.width,
-                             titleLabelRect.size.height);
-        cY = t_y_offset + cY + cHeight + padding_height + titleLabelRect.size.height;
+                             authorFrameRect.size.width,
+                             authorFrameRect.size.height);
+        cY = t_y_offset + cY + cHeight + padding_height + authorFrameRect.size.height;
     } completion:^(BOOL finished) {
         if ([pendingTiles count] <= 0) {
             [self displayBio];

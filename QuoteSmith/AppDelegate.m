@@ -10,6 +10,7 @@
 #import "GameViewController.h"
 #import "ColorTestViewController.h"
 #import "MainMenuViewController.h"
+#import "ExpandingNavigationBar.h"
 
 @implementation AppDelegate
 
@@ -20,15 +21,13 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     GameViewController *gvc = [[GameViewController alloc] init];
-    ColorTestViewController *cvc = [[ColorTestViewController alloc] init];
-    MainMenuViewController *mvc = [[MainMenuViewController alloc] init];
-
-    //UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:cvc];
-    UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:gvc];
+    
+    UINavigationController *navController = [[UINavigationController alloc] initWithNavigationBarClass:[ExpandingNavigationBar class] toolbarClass:nil];
+    [navController pushViewController:gvc animated:NO];
     
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     // Override point for customization after application launch.
-    self.window.rootViewController = nav;
+    self.window.rootViewController = navController;
     self.window.backgroundColor = [UIColor whiteColor];
     [self.window makeKeyAndVisible];
     return YES;

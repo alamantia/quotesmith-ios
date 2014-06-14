@@ -8,6 +8,14 @@
 
 #import <UIKit/UIKit.h>
 
+
+struct HSV {
+    float H;
+    float S;
+    float V;
+};
+
+
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
 
 @property (strong, nonatomic) UIWindow *window;
