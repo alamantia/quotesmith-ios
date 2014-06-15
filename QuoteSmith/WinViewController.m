@@ -12,6 +12,7 @@
 #import "AppContext.h"
 #import "UIColor+HSV.h"
 #import "WordTile.h"
+#import "NavBarButton.h"
 
 @interface WinViewController () {
     UIButton *buttonNext;
@@ -52,8 +53,12 @@
     self.navigationController.navigationBar.tintColor = [AppContext sharedContext].fgColor;
     self.navigationController.topViewController.title = @"Quote Smith";
     
-    UIBarButtonItem *nextButton = [[UIBarButtonItem alloc] initWithTitle:@"Next" style:UIBarButtonItemStylePlain target:self action:@selector(finished:)];
-    [[self navigationItem] setRightBarButtonItems:@[nextButton]];
+    
+    NavBarButton *settingsView = [[NavBarButton alloc] initWithFrame:CGRectMake(0, 0, 24, 24)];
+    [settingsView addTarget:self action:@selector(finished:) forControlEvents:UIControlEventTouchUpInside];
+    [settingsView setBackgroundImage:[UIImage imageNamed:@"icon_26914"] forState:UIControlStateNormal];
+    UIBarButtonItem *expandButton = [[UIBarButtonItem alloc] initWithCustomView:settingsView];
+    [[self navigationItem] setRightBarButtonItems:@[expandButton]];
 
     
 
