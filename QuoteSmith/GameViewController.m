@@ -428,6 +428,18 @@ float node_cost(CGPoint a, CGPoint b)
 
 }
 
+- (void) swipe:(UISwipeGestureRecognizer *) gesture
+{
+    if (showingOptions == NO) {
+        CGRect fr = sv.frame;
+        fr.origin.y += OPTIONS_HEIGHT;
+        sv.frame = fr;
+        sv.userInteractionEnabled = YES;
+        showingOptions = YES;
+    }
+}
+
+
 - (void) tap:(UITapGestureRecognizer *) gesture
 {
     [self hideOptions];
@@ -569,6 +581,13 @@ float node_cost(CGPoint a, CGPoint b)
         [panRecognizer setMaximumNumberOfTouches:1];
         [panRecognizer setDelegate:self];
         [tile addGestureRecognizer:panRecognizer];
+        
+        
+        
+        UISwipeGestureRecognizer *recognizer = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(swipe:)];
+        [recognizer setDirection:(UISwipeGestureRecognizerDirectionDown)];
+        [sv addGestureRecognizer:recognizer];
+        
         [tileViews addObject:tile];
     }
     return;
