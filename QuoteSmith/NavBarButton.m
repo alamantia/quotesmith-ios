@@ -18,7 +18,7 @@
     Left
     Right
 */
-    insets = UIEdgeInsetsMake(0, 0, 0, 15.0f);
+    insets = UIEdgeInsetsMake(0, 0, 0, 13.0f);
     return insets;
 }
 

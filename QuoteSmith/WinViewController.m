@@ -264,7 +264,7 @@
                               titleLabelRect.size.width,
                               titleLabelRect.size.height);
         cHeight = titleLabelRect.size.height;
-        if ((cX + titleLabelRect.size.height + margin_left) > (self.view.frame.size.width - 40)) {
+        if ((cX + titleLabelRect.size.height + margin_left + 20) > (self.view.frame.size.width - 40)) {
             cX  = margin_left;
             line = line + 1;
             cY += cHeight;

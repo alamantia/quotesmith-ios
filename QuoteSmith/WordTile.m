@@ -152,7 +152,11 @@
 }
 
 - (void) layoutSubviews {
-    float viewPadding = 10.0f;
+    float viewPadding = 0.0;
+    
+    if (self.mode == TILE_MODE_GAME) {
+        viewPadding = 2.0;
+    }
     
     self.layer.borderColor = [UIColor blackColor].CGColor;
     self.layer.borderWidth = 0.0f;
@@ -162,12 +166,12 @@
     CGSize expected = [label.text sizeWithFont:label.font constrainedToSize:max lineBreakMode:label.lineBreakMode];
 
     CGRect frame;
-    frame = CGRectMake(0,0, expected.width, expected.height);
+    frame = CGRectMake(viewPadding,viewPadding, expected.width, expected.height);
     label.frame = frame;
     
     CGRect of = self.frame;
-    of.size.width = expected.width +8;
-    of.size.height = expected.height;
+    of.size.width = expected.width   + (viewPadding * 2);
+    of.size.height = expected.height + (viewPadding *2);
     
     if (self.mode == TILE_MODE_WIN) {
         self.backgroundColor = [UIColor clearColor];
@@ -183,9 +187,8 @@
             self.layer.borderWidth = 1.0;
         }
     }
-    
-    self.frame = of;
 
+    self.frame = of;
     highlightView.frame = CGRectMake(0, 0, self.frame.size.width, self.frame.size.height);
 }
 

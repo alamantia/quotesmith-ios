@@ -196,14 +196,14 @@ float node_cost(CGPoint a, CGPoint b)
         if (r == nil) {
             r = t;
             lowest = cost;
-            NSLog(@"%@ to %@ - %i with slope %f ", p.str, t.str, cost, (a.y - b.y) / (a.x - b.x));
+            //NSLog(@"%@ to %@ - %i with slope %f ", p.str, t.str, cost, (a.y - b.y) / (a.x - b.x));
             continue;
         }
         CGPoint c = CGPointMake(r.frame.origin.x, (r.frame.origin.y ));
         float  slope_new = (a.y - b.y) / (a.x - b.x);
         float  slope_old = (a.y - c.y) / (a.x - c.x);
         float  slope_diff = slope_new - slope_old;
-        NSLog(@"%@ to %@ - %i with slope %f - slope diff %f", p.str, t.str, cost, (a.y - b.y) / (a.x - b.x), slope_diff);
+        //NSLog(@"%@ to %@ - %i with slope %f - slope diff %f", p.str, t.str, cost, (a.y - b.y) / (a.x - b.x), slope_diff);
         if (cost < lowest) {
             r = t;
             lowest = cost;
@@ -428,8 +428,13 @@ float node_cost(CGPoint a, CGPoint b)
 
 }
 
+- (void) tap:(UITapGestureRecognizer *) gesture
+{
+    [self hideOptions];
+}
 - (void) move:(UIPanGestureRecognizer *) gesture
 {
+    [self hideOptions];
     if (moving == YES) {
         if (gesture.view != movingView)
             return;
@@ -517,7 +522,7 @@ float node_cost(CGPoint a, CGPoint b)
     // Set the required modified colors so we an make a decent use of the
     cv = [[CircleView alloc] initWithFrame:CGRectMake(40,40, 128, 128)];
     cv.backgroundColor = [UIColor acolorWithHue:bgHSV.H
-                                     saturation:bgHSV.S-0.15
+                                     saturation:bgHSV.S-0.125
                                           value:bgHSV.V
                                           alpha:1.0];
     cv.userInteractionEnabled = NO;
@@ -607,7 +612,7 @@ float node_cost(CGPoint a, CGPoint b)
             CGRect fr = sv.frame;
             fr.origin.y += OPTIONS_HEIGHT;
             sv.frame = fr;
-            sv.userInteractionEnabled = NO;
+            sv.userInteractionEnabled = YES;
             showingOptions = YES;
         } else {
             CGRect fr = sv.frame;
@@ -659,7 +664,9 @@ float node_cost(CGPoint a, CGPoint b)
     sv = [[UIScrollView alloc] initWithFrame:self.view.frame];
     sv.backgroundColor = [UIColor clearColor];
     sv.contentSize = CGSizeMake(self.view.frame.size.width, self.view.frame.size.height);
+    UITapGestureRecognizer *tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tap:)];
     [self.view addSubview:sv];
+    [sv addGestureRecognizer:tapGestureRecognizer];
     [quotes loadIndex];
     [quotes randomQuote];
     self.navigationController.navigationBar.translucent = NO;
