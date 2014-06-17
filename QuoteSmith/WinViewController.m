@@ -135,7 +135,7 @@
 
     [buttonWikipedia addTarget:self action:@selector(wikipedia:) forControlEvents:UIControlEventTouchUpInside];
     [buttonWikipedia setTitle:wikiString forState:UIControlStateNormal];
-    buttonWikipedia.titleLabel.font = [[AppContext sharedContext] fontForType:FONT_TYPE_TILE];
+    buttonWikipedia.titleLabel.font = [[AppContext sharedContext] fontForType:FONT_TYPE_WIN_BUTTON];
     buttonWikipedia.titleLabel.textAlignment = NSTextAlignmentCenter;
     CGRect titleLabelRect = [wikiString boundingRectWithSize:max options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:buttonWikipedia.titleLabel.font} context:nil];
     buttonWikipedia.frame = CGRectMake((self.view.bounds.size.width/2) - (titleLabelRect.size.width/2),
@@ -145,8 +145,6 @@
     [buttonWikipedia setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     buttonWikipedia.layer.borderColor = [UIColor blackColor].CGColor;
     buttonWikipedia.layer.borderWidth = 1.0;
-    
-    
     buttonWikipedia.backgroundColor = [UIColor  acolorWithHue:self.bgHSV.H saturation:self.bgHSV.S value:self.bgHSV.V-0.2 alpha:1.0];
     
     [sv addSubview:buttonWikipedia];
@@ -156,7 +154,7 @@
 // display some author detail
 - (void) displayAuthor
 {
-    UIFont *authorFont = [UIFont fontWithName:@"Futura-MediumItalic" size:24.0];
+    UIFont *authorFont = [[AppContext sharedContext] fontForType:FONT_TYPE_AUTHOR];
     
     NSString *s = [NSString stringWithFormat:@"%@",[self.quote objectForKey:@"author"]];
     CGSize max = CGSizeMake(self.view.bounds.size.width - 80,
@@ -248,7 +246,7 @@
     pendingTiles = [[NSMutableArray alloc] init];
 
     quoteColor   = [UIColor colorWithHexString:@"17b680"];
-    quoteFont    = [[AppContext sharedContext] fontForType:FONT_TYPE_TILE];
+    quoteFont    = [[AppContext sharedContext] fontForType:FONT_TYPE_WIN_TILE];
     float spacing = 10.0f;
     float margin_left = 20.0;
     cX      = margin_left;
@@ -264,7 +262,7 @@
                               titleLabelRect.size.width,
                               titleLabelRect.size.height);
         cHeight = titleLabelRect.size.height;
-        if ((cX + titleLabelRect.size.height + margin_left + 20) > (self.view.frame.size.width - 40)) {
+        if ((cX + titleLabelRect.size.width + margin_left + 20) > (self.view.frame.size.width - 40)) {
             cX  = margin_left;
             line = line + 1;
             cY += cHeight;
@@ -322,7 +320,7 @@
     [self.view addSubview:sv];
     
     quoteColor   = [UIColor colorWithHexString:@"17b680"];
-    quoteFont    = [[AppContext sharedContext] fontForType:FONT_TYPE_TILE];
+    quoteFont    = [[AppContext sharedContext] fontForType:FONT_TYPE_WIN_TILE];
 
     float margin= 20.0;
     buttonNext = [UIButton buttonWithType:UIButtonTypeRoundedRect];

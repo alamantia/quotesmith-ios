@@ -431,11 +431,14 @@ float node_cost(CGPoint a, CGPoint b)
 - (void) swipe:(UISwipeGestureRecognizer *) gesture
 {
     if (showingOptions == NO) {
-        CGRect fr = sv.frame;
-        fr.origin.y += OPTIONS_HEIGHT;
-        sv.frame = fr;
-        sv.userInteractionEnabled = YES;
-        showingOptions = YES;
+        [UIView animateWithDuration:0.15 animations:^{
+            CGRect fr = sv.frame;
+            fr.origin.y += OPTIONS_HEIGHT;
+            sv.frame = fr;
+            sv.userInteractionEnabled = YES;
+            showingOptions = YES;
+        } completion:^(BOOL finished) {
+        }];
     }
 }
 
@@ -533,8 +536,10 @@ float node_cost(CGPoint a, CGPoint b)
     
     // Set the required modified colors so we an make a decent use of the
     cv = [[CircleView alloc] initWithFrame:CGRectMake(40,40, 128, 128)];
-    cv.backgroundColor = [UIColor acolorWithHue:bgHSV.H
-                                     saturation:bgHSV.S-0.125
+    cv.backgroundColor = [UIColor clearColor];
+    cv.bgHSV = bgHSV;
+    cv.bgColor = [UIColor acolorWithHue:bgHSV.H
+                                     saturation:bgHSV.S-0.01
                                           value:bgHSV.V
                                           alpha:1.0];
     cv.userInteractionEnabled = NO;
@@ -666,9 +671,10 @@ float node_cost(CGPoint a, CGPoint b)
 - (void) populateOptionsView {
     UIBarButtonItem *skipButton = [[UIBarButtonItem alloc] initWithTitle:@"Skip" style:UIBarButtonItemStylePlain target:self action:@selector(skip:)];
     UIBarButtonItem *hintButton = [[UIBarButtonItem alloc] initWithTitle:@"Hint" style:UIBarButtonItemStylePlain target:self action:@selector(hint:)];
+    UIBarButtonItem *menuButton = [[UIBarButtonItem alloc] initWithTitle:@"Menu" style:UIBarButtonItemStylePlain target:self action:@selector(hint:)];
 
     optionsToolbar = [[UIToolbar alloc] initWithFrame:optionsView.frame];
-    [optionsToolbar setItems:@[skipButton, hintButton] animated:YES];
+    [optionsToolbar setItems:@[skipButton, hintButton, menuButton] animated:YES];
     [optionsView addSubview:optionsToolbar];
     
 }

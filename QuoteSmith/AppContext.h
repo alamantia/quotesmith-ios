@@ -9,9 +9,12 @@
 #import <Foundation/Foundation.h>
 
 enum FONT_TYPES {
+    FONT_TYPE_WIN_TILE,
     FONT_TYPE_TILE,
     FONT_TYPE_BIO,
     FONT_TYPE_BUTTON,
+    FONT_TYPE_AUTHOR,
+    FONT_TYPE_WIN_BUTTON,
 };
 
 @interface AppContext : NSObject

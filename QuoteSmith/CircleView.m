@@ -12,6 +12,7 @@
 #import "CircleView.h"
 
 @interface CircleView () {
+    CALayer *objectLayer;
     CABasicAnimation *radiusMaxAnimation;
     CABasicAnimation *radiusMinAnimation;
 }
@@ -20,7 +21,7 @@
 @implementation CircleView
 
 - (void) defineAnimations {
-    // define the corner radius animations
+    /*
     radiusMaxAnimation = [CABasicAnimation animationWithKeyPath:@"cornerRadius"];
     radiusMaxAnimation.fromValue = [NSNumber numberWithFloat:0.0];
     radiusMaxAnimation.toValue = [NSNumber numberWithFloat:65.0];
@@ -33,15 +34,34 @@
     radiusMinAnimation.duration = 10.0f;
     
     [self.layer addAnimation:radiusMaxAnimation forKey:@"radiusMin"];
+    */
 }
+
+- (void) setupLayer
+{
+    objectLayer = [CALayer layer];
+    objectLayer.frame = self.frame;
+    objectLayer.cornerRadius = 64;
+    objectLayer.backgroundColor = self.bgColor.CGColor;
+    [self.layer addSublayer:objectLayer];
+}
+
+- (void) performAnimation1
+{
+    [CATransaction begin];
+    [CATransaction setAnimationDuration:20.0];
+    objectLayer.cornerRadius = 0;
+    [CATransaction setCompletionBlock:^{
+        NSLog(@"Animation Finished");
+    }];
+    [CATransaction commit];
+}
+
 - (id)initWithFrame:(CGRect)frame
 {
     self = [super initWithFrame:frame];
     if (self) {
-        // Initialization code
-        self.alpha = 0.5;
-        self.layer.cornerRadius = 65;
-        [self defineAnimations];
+        [self setupLayer];
     }
     return self;
 }
@@ -49,22 +69,15 @@
 // perform a looping layer animation
 - (void) animate
 {
+    [self performAnimation1];
     return;
-    CGFloat damping = 0.60;
-    [UIView animateWithDuration:2.5 delay:0 usingSpringWithDamping: damping  initialSpringVelocity: 1.0 options:UIViewAnimationOptionCurveEaseIn |
-     UIViewAnimationOptionAutoreverse | UIViewAnimationOptionRepeat animations:^{
-         self.layer.cornerRadius = 0;
-    } completion:^(BOOL finished) {
+}
 
-    }];
-}
-/*
-// Only override drawRect: if you perform custom drawing.
-// An empty implementation adversely affects performance during animation.
-- (void)drawRect:(CGRect)rect
+- (void) setBgColor:(UIColor *)bgColor
 {
-    // Drawing code
+    objectLayer.backgroundColor = bgColor.CGColor;
+    _bgColor = bgColor;
+
 }
-*/
 
 @end

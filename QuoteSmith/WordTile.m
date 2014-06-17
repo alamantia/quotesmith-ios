@@ -155,7 +155,7 @@
     float viewPadding = 0.0;
     
     if (self.mode == TILE_MODE_GAME) {
-        viewPadding = 2.0;
+        viewPadding = 5.0;
     }
     
     self.layer.borderColor = [UIColor blackColor].CGColor;

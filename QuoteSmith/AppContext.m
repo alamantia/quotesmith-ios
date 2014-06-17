@@ -29,6 +29,22 @@
             return [UIFont fontWithName:@"Futura-Medium" size:40.0];
         }
     }
+    
+    if (fontType == FONT_TYPE_WIN_TILE) {
+        if ( UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone ) {
+            return [UIFont fontWithName:@"Futura-CondensedExtraBold" size:28.0];
+        } else {
+            return [UIFont fontWithName:@"Futura-CondensedExtraBold" size:40.0];
+        }
+    }
+    
+    if (fontType == FONT_TYPE_AUTHOR) {
+        if ( UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone ) {
+            return [UIFont fontWithName:@"Futura-MediumItalic" size:16.0];
+        } else {
+            return [UIFont fontWithName:@"Futura-MediumItalic" size:24.0];
+        }
+    }
     if (fontType == FONT_TYPE_BIO) {
         if ( UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone ) {
             return [UIFont fontWithName:@"Futura-Medium" size:16.0];
@@ -36,6 +52,15 @@
             return [UIFont fontWithName:@"Futura-Medium" size:24.0];
         }
     }
+    
+    if (fontType == FONT_TYPE_WIN_BUTTON) {
+        if ( UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone ) {
+            return [UIFont fontWithName:@"Futura-Medium" size:26.0];
+        } else {
+            return [UIFont fontWithName:@"Futura-Medium" size:32.0];
+        }
+    }
+    
     return nil;
 }
 
