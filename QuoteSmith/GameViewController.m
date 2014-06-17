@@ -669,12 +669,13 @@ float node_cost(CGPoint a, CGPoint b)
 }
 
 - (void) populateOptionsView {
-    UIBarButtonItem *skipButton = [[UIBarButtonItem alloc] initWithTitle:@"Skip" style:UIBarButtonItemStylePlain target:self action:@selector(skip:)];
-    UIBarButtonItem *hintButton = [[UIBarButtonItem alloc] initWithTitle:@"Hint" style:UIBarButtonItemStylePlain target:self action:@selector(hint:)];
-    UIBarButtonItem *menuButton = [[UIBarButtonItem alloc] initWithTitle:@"Menu" style:UIBarButtonItemStylePlain target:self action:@selector(hint:)];
+    UIBarButtonItem *skipButton = [[UIBarButtonItem alloc] initWithTitle:@"SKIP" style:UIBarButtonItemStylePlain target:self action:@selector(skip:)];
+    UIBarButtonItem *hintButton = [[UIBarButtonItem alloc] initWithTitle:@"HINT" style:UIBarButtonItemStylePlain target:self action:@selector(hint:)];
+    UIBarButtonItem *menuButton = [[UIBarButtonItem alloc] initWithTitle:@"MENU" style:UIBarButtonItemStylePlain target:self action:@selector(hint:)];
 
     optionsToolbar = [[UIToolbar alloc] initWithFrame:optionsView.frame];
     [optionsToolbar setItems:@[skipButton, hintButton, menuButton] animated:YES];
+    
     [optionsView addSubview:optionsToolbar];
     
 }

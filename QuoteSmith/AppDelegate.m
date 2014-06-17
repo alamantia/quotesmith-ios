@@ -18,13 +18,20 @@
 @synthesize managedObjectModel = _managedObjectModel;
 @synthesize persistentStoreCoordinator = _persistentStoreCoordinator;
 
+- (void) StyleTheApp
+{
+    [[UIBarButtonItem appearance] setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor blackColor],
+                                                           NSFontAttributeName : [UIFont fontWithName:@"Futura-Medium" size:16.0]} forState:UIControlStateNormal];
+    return;
+}
+
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     GameViewController *gvc = [[GameViewController alloc] init];
     
     UINavigationController *navController = [[UINavigationController alloc] initWithNavigationBarClass:[ExpandingNavigationBar class] toolbarClass:nil];
     [navController pushViewController:gvc animated:NO];
-    
+    [self StyleTheApp];
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     // Override point for customization after application launch.
     self.window.rootViewController = navController;
