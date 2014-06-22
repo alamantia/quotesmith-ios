@@ -7,10 +7,11 @@
 //
 #import "AppDelegate.h"
 #import <UIKit/UIKit.h>
+#import "GADInterstitial.h"
 
 @class GameViewController;
 
-@interface WinViewController : UIViewController <UIWebViewDelegate> {
+@interface WinViewController : UIViewController <UIWebViewDelegate, GADInterstitialDelegate> {
     
 }
 @property (nonatomic, strong) GameViewController *delegate;

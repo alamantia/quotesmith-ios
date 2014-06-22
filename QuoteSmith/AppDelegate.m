@@ -27,15 +27,19 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+    srand(time(0));
+    //[[UINavigationBar appearance] setBarTintColor:[UIColor blackColor]];
+    //[[UINavigationBar appearance] setBarStyle:UIBarStyleBlackTranslucent];
+
     GameViewController *gvc = [[GameViewController alloc] init];
     
     UINavigationController *navController = [[UINavigationController alloc] initWithNavigationBarClass:[ExpandingNavigationBar class] toolbarClass:nil];
+    [navController.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor blackColor]}];
     [navController pushViewController:gvc animated:NO];
     [self StyleTheApp];
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     // Override point for customization after application launch.
     self.window.rootViewController = navController;
-    self.window.backgroundColor = [UIColor whiteColor];
     [self.window makeKeyAndVisible];
     return YES;
 }
@@ -59,6 +63,7 @@
 
 - (void)applicationDidBecomeActive:(UIApplication *)application
 {
+
     // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
 }
 

@@ -13,13 +13,15 @@
 }
 @end
 
+static int current_quote = 0;
+
 @implementation Quotes
 
 - (NSDictionary *) randomQuote
 {
     NSMutableDictionary *r = [[NSMutableDictionary alloc] init];
-    srand(time(0));
     int q_index = rand() % [quoteArray count];
+    q_index = current_quote % [quoteArray count];
     NSDictionary *quoteIndex = [quoteArray objectAtIndex:q_index];
     NSError* error = nil;
     
@@ -39,6 +41,7 @@
     NSArray *words = [r[@"quote"] componentsSeparatedByString:@" "];
     r[@"words"] = [words copy];
     NSLog(@"%@", quote);
+    current_quote++;
     return [[NSDictionary alloc] initWithDictionary:r];
 }
 

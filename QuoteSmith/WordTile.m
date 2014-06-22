@@ -98,7 +98,7 @@
                           delay:0.0f
                         options:UIViewAnimationOptionAllowUserInteraction
                      animations:^{
-                         //highlightView.backgroundColor = [UIColor colorWithHexString:@"00ff00"];
+                         highlightView.backgroundColor = [UIColor colorWithHexString:@"00ff00"];
                          highlightView.backgroundColor = [UIColor colorWithHexString:@"ffffff"];
 
                          highlightView.alpha = 0.60;

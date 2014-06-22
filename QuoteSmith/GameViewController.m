@@ -8,7 +8,6 @@
 #import <QuartzCore/QuartzCore.h>
 
 #import "AppDelegate.h"
-#import "CircleView.h"
 #import "GameViewController.h"
 #import "WinViewController.h"
 #import "TransitionManager.h"
@@ -17,6 +16,7 @@
 #import "UIColor+HSV.h"
 #import "AppContext.h"
 #import "NavBarButton.h"
+#import "PlasmaBackgrounds.h"
 
 #define ARC4RANDOM_MAX      0x100000000
 
@@ -30,6 +30,8 @@ unsigned int MIN_COST = 90;
 @interface GameViewController ()
 {
     Quotes  *quotes;
+    PlasmaBackgrounds   *plasmaVc;
+    
     BOOL showingOptions;
     CGFloat lastScale;
     CGFloat lastRotation;
@@ -447,6 +449,7 @@ float node_cost(CGPoint a, CGPoint b)
 {
     [self hideOptions];
 }
+
 - (void) move:(UIPanGestureRecognizer *) gesture
 {
     [self hideOptions];
@@ -459,14 +462,32 @@ float node_cost(CGPoint a, CGPoint b)
     CGPoint location = [gesture translationInView:sv];
     if ([gesture state] == UIGestureRecognizerStateBegan) {
         moving = YES;
-        movingView = gesture.view;
+        movingView = (WordTile *)gesture.view;
         firstX = t.frame.origin.x;
         firstY = t.frame.origin.y;
     } else if ([gesture state] == UIGestureRecognizerStateChanged) {
         CGRect r = t.frame;
         NSLog(@"Moved %f %f", location.x, location.y);
-        r.origin.x = firstX + location.x;
-        r.origin.y = firstY + location.y;
+        
+        float targetX = firstX + location.x;
+        float targetY = firstY + location.y;
+        float newX = firstX + location.x;
+        float newY = firstY + location.y;
+        
+        if (newX + t.frame.size.width >= self.view.frame.size.width) {
+            targetX = self.view.frame.size.width - t.frame.size.width;
+        } else if (newX <= 0) {
+            targetX = 0;
+        }
+        
+        if (newY + t.frame.size.height >= self.view.frame.size.height) {
+            targetY = self.view.frame.size.height - t.frame.size.height;
+        } else if (newY <= 0) {
+            targetY = 0;
+        }
+        
+        r.origin.x = targetX;
+        r.origin.y = targetY;
         t.frame = r;
     } else if ([gesture state] == UIGestureRecognizerStateEnded) {
         moving = NO;
@@ -529,30 +550,9 @@ float node_cost(CGPoint a, CGPoint b)
     [AppContext sharedContext].bgColor = bgColor;
 }
 
-// build up some particles to use as background effects
-- (void) buildParticles
-{
-    CircleView *cv = nil;
-    
-    // Set the required modified colors so we an make a decent use of the
-    cv = [[CircleView alloc] initWithFrame:CGRectMake(40,40, 128, 128)];
-    cv.backgroundColor = [UIColor clearColor];
-    cv.bgHSV = bgHSV;
-    cv.bgColor = [UIColor acolorWithHue:bgHSV.H
-                                     saturation:bgHSV.S-0.01
-                                          value:bgHSV.V
-                                          alpha:1.0];
-    cv.userInteractionEnabled = NO;
-    [sv addSubview:cv];
-    [cv animate];
-    
-    return;
-}
-
 - (void) setupBoard
 {
     [self generateColors];
-    [self buildParticles];
     [self setupOptionsView];
 
     [backgroundTimer invalidate];
@@ -601,6 +601,17 @@ float node_cost(CGPoint a, CGPoint b)
 - (IBAction) hint : (id)sender
 {
     // perform the hint logic here
+    
+    /*
+     
+     NSLog(@"Checking for moving view %@", movingView.str);
+     if ([currentChain containsObject:movingView]) {
+     for (WordTile *t in currentChain) {
+     [t highlightGreen];
+     }
+     }
+ 
+    */
     return;
 }
 
@@ -669,12 +680,13 @@ float node_cost(CGPoint a, CGPoint b)
 }
 
 - (void) populateOptionsView {
+    UIBarButtonItem *flexibleSpace =  [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
     UIBarButtonItem *skipButton = [[UIBarButtonItem alloc] initWithTitle:@"SKIP" style:UIBarButtonItemStylePlain target:self action:@selector(skip:)];
     UIBarButtonItem *hintButton = [[UIBarButtonItem alloc] initWithTitle:@"HINT" style:UIBarButtonItemStylePlain target:self action:@selector(hint:)];
     UIBarButtonItem *menuButton = [[UIBarButtonItem alloc] initWithTitle:@"MENU" style:UIBarButtonItemStylePlain target:self action:@selector(hint:)];
 
     optionsToolbar = [[UIToolbar alloc] initWithFrame:optionsView.frame];
-    [optionsToolbar setItems:@[skipButton, hintButton, menuButton] animated:YES];
+    [optionsToolbar setItems:@[flexibleSpace, skipButton, hintButton, menuButton, flexibleSpace] animated:YES];
     
     [optionsView addSubview:optionsToolbar];
     
@@ -683,6 +695,7 @@ float node_cost(CGPoint a, CGPoint b)
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
     optionsView = [[UIView alloc] initWithFrame:CGRectMake(0,0, self.view.frame.size.width, OPTIONS_HEIGHT)];
     [self.view addSubview:optionsView];
     [self populateOptionsView];
@@ -690,6 +703,11 @@ float node_cost(CGPoint a, CGPoint b)
     sv = [[UIScrollView alloc] initWithFrame:self.view.frame];
     sv.backgroundColor = [UIColor clearColor];
     sv.contentSize = CGSizeMake(self.view.frame.size.width, self.view.frame.size.height);
+    
+    plasmaVc = [[PlasmaBackgrounds alloc] init];
+    plasmaVc.view.frame = self.view.frame;
+    [sv addSubview:plasmaVc.view];
+
     UITapGestureRecognizer *tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tap:)];
     [self.view addSubview:sv];
     [sv addGestureRecognizer:tapGestureRecognizer];
@@ -721,12 +739,15 @@ float node_cost(CGPoint a, CGPoint b)
 - (void) displayWin {
     WinViewController *win = [[WinViewController alloc] init];
     win.view.backgroundColor = [[AppContext sharedContext] bgColor];
+    win.view.backgroundColor = [UIColor whiteColor];
+    
     win.bgHSV = bgHSV;
     win.delegate = self;
     win.quote = quote;
     win.modalPresentationStyle = UIModalPresentationCustom;
     UINavigationController *n = [[UINavigationController alloc] initWithRootViewController:win];
     n.transitioningDelegate = self;
+    [n.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor blackColor]}];
     n.modalPresentationStyle = UIModalPresentationCustom;
     
     [self hideOptions];

@@ -14,7 +14,12 @@
 #import "WordTile.h"
 #import "NavBarButton.h"
 
+#define MY_INTERSTITIAL_UNIT_ID @"ca-app-pub-8721364252541931/3727404808"
+
 @interface WinViewController () {
+    
+    GADInterstitial *interstitial_;
+
     UIButton *buttonNext;
     UIButton *buttonWikipedia;
     
@@ -127,7 +132,7 @@
     cY += 50;
     /// Draw the wikipedia button .. Learn More about X
     
-    NSString *wikiString = [NSString stringWithFormat:@"Learn more about %@",
+    NSString *wikiString = [NSString stringWithFormat:@"  Learn more about %@  ",
                             [self.quote objectForKey:@"author"]];
     buttonWikipedia = [UIButton buttonWithType:UIButtonTypeRoundedRect];
     buttonWikipedia.frame = CGRectMake((self.view.bounds.size.width/2) - (labelRect.size.width/2), 140, 240, 30);
@@ -146,7 +151,7 @@
     buttonWikipedia.layer.borderColor = [UIColor blackColor].CGColor;
     buttonWikipedia.layer.borderWidth = 1.0;
     buttonWikipedia.backgroundColor = [UIColor  acolorWithHue:self.bgHSV.H saturation:self.bgHSV.S value:self.bgHSV.V-0.2 alpha:1.0];
-    
+    buttonWikipedia.backgroundColor = [UIColor clearColor];
     [sv addSubview:buttonWikipedia];
     sv.contentSize = CGSizeMake(self.view.frame.size.width, cY + titleLabelRect.size.height + 80);
 }
@@ -200,6 +205,7 @@
             return;
         }
     }];
+    [self ad];
 }
 
 - (WordTile *) randomPendingTile
@@ -241,6 +247,8 @@
 - (void) displayQuote
 {
     self.view.backgroundColor = [[AppContext sharedContext] bgColor];
+    self.view.backgroundColor = [UIColor whiteColor];
+
     tileArray    = [[NSMutableArray alloc] init];
     targetsArray = [[NSMutableArray alloc] init];
     pendingTiles = [[NSMutableArray alloc] init];
@@ -273,6 +281,7 @@
         t.customColors = YES;
         t.fgColor = [[AppContext sharedContext] fgColor];
         t.bgColor = [[AppContext sharedContext] bgColor];
+        t.bgColor = [UIColor whiteColor];
 
         t.location = CGPointMake(cX, cY);
         [tileArray addObject:t];
@@ -312,9 +321,24 @@
     return self;
 }
 
+- (void) ad
+{
+    interstitial_ = [[GADInterstitial alloc] init];
+    interstitial_.adUnitID = MY_INTERSTITIAL_UNIT_ID;
+    interstitial_.delegate = self;
+    GADRequest *r = [GADRequest request];
+    /* IF DEBUG ADS */
+    r.testDevices = [NSArray arrayWithObjects:
+                     [[[UIDevice currentDevice] identifierForVendor] UUIDString],
+                     nil];
+    [interstitial_ loadRequest:r];
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+
     sv = [[UIScrollView alloc] initWithFrame:self.view.frame];
     sv.backgroundColor = [UIColor clearColor];
     [self.view addSubview:sv];
@@ -359,5 +383,21 @@
     // Pass the selected object to the new view controller.
 }
 */
+
+
+-(BOOL)prefersStatusBarHidden
+{
+    return YES;
+}
+/* Manage / Handle Ad Requests  -- going to try just interstitial's for now */
+- (void)interstitialDidReceiveAd:(GADInterstitial *)interstitial
+{
+    @try {
+        [interstitial_ presentFromRootViewController:self];
+    } @catch (NSException *e) {
+        
+    }
+}
+
 
 @end
