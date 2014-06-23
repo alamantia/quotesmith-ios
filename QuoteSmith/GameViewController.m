@@ -80,6 +80,9 @@ float node_cost(CGPoint a, CGPoint b)
     optionsView.backgroundColor = [UIColor  acolorWithHue:bgHSV.H saturation:bgHSV.S value:bgHSV.V-0.1 alpha:1.0];
     optionsToolbar.translucent = YES;
     optionsToolbar.barTintColor = [UIColor  acolorWithHue:bgHSV.H saturation:bgHSV.S value:bgHSV.V-0.1 alpha:1.0];
+    
+    optionsToolbar.barTintColor = [UIColor colorWithHexString:@"eeeeee"];
+
     optionsToolbar.tintColor = [UIColor blackColor];
     return;
 }
@@ -545,7 +548,9 @@ float node_cost(CGPoint a, CGPoint b)
     self.navigationController.navigationBar.barTintColor = bgColor;
     self.navigationController.navigationBar.tintColor = fgColor;
     self.navigationController.topViewController.title = @"Quote Smith";
+    self.navigationController.navigationBar.barTintColor = [UIColor colorWithHexString:@"ffffff"];
 
+    
     [AppContext sharedContext].fgColor = fgColor;
     [AppContext sharedContext].bgColor = bgColor;
 }

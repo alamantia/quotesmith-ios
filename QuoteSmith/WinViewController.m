@@ -14,6 +14,7 @@
 #import "WordTile.h"
 #import "NavBarButton.h"
 
+
 #define MY_INTERSTITIAL_UNIT_ID @"ca-app-pub-8721364252541931/3727404808"
 
 @interface WinViewController () {
@@ -54,8 +55,8 @@
 - (void) viewWillAppear:(BOOL)animated
 {
     self.navigationController.navigationBar.translucent = NO;
-    self.navigationController.navigationBar.barTintColor = [AppContext sharedContext].bgColor;
-    self.navigationController.navigationBar.tintColor = [AppContext sharedContext].fgColor;
+    //self.navigationController.navigationBar.barTintColor = [AppContext sharedContext].bgColor;
+    //self.navigationController.navigationBar.tintColor = [AppContext sharedContext].fgColor;
     self.navigationController.topViewController.title = @"Quote Smith";
     
     
@@ -94,6 +95,24 @@
         buttonNext.alpha = 1.0;
     } completion:^(BOOL finished) {
     }];
+}
+
+- (void) displaySocial : (float) positionY
+{
+    
+    NavBarButton *twitterView = [[NavBarButton alloc] initWithFrame:CGRectMake(200, positionY, 40, 44)];
+    [twitterView addTarget:self action:@selector(tweet:) forControlEvents:UIControlEventTouchUpInside];
+    [twitterView setBackgroundImage:[UIImage imageNamed:@"twitter_share"] forState:UIControlStateNormal];
+    [sv addSubview:twitterView];
+    
+    
+    NavBarButton *facebookView = [[NavBarButton alloc] initWithFrame:CGRectMake(260, positionY, 40, 44)];
+    [facebookView addTarget:self action:@selector(tweet:) forControlEvents:UIControlEventTouchUpInside];
+    [facebookView setBackgroundImage:[UIImage imageNamed:@"facebook_share"] forState:UIControlStateNormal];
+    [sv addSubview:facebookView];
+
+    
+    return;
 }
 
 - (void) displayBio
@@ -153,7 +172,9 @@
     buttonWikipedia.backgroundColor = [UIColor  acolorWithHue:self.bgHSV.H saturation:self.bgHSV.S value:self.bgHSV.V-0.2 alpha:1.0];
     buttonWikipedia.backgroundColor = [UIColor clearColor];
     [sv addSubview:buttonWikipedia];
-    sv.contentSize = CGSizeMake(self.view.frame.size.width, cY + titleLabelRect.size.height + 80);
+    sv.contentSize = CGSizeMake(self.view.frame.size.width, cY + titleLabelRect.size.height + 200);
+    
+    [self displaySocial:cY + titleLabelRect.size.height + 40];
 }
 
 // display some author detail
