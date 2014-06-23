@@ -597,7 +597,6 @@ float node_cost(CGPoint a, CGPoint b)
         UISwipeGestureRecognizer *recognizer = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(swipe:)];
         [recognizer setDirection:(UISwipeGestureRecognizerDirectionDown)];
         [sv addGestureRecognizer:recognizer];
-        
         [tileViews addObject:tile];
     }
     return;
@@ -605,18 +604,31 @@ float node_cost(CGPoint a, CGPoint b)
 
 - (IBAction) hint : (id)sender
 {
+    NSArray *_quotes = quote[@"words"];
+    int r =   (rand() % [_quotes count]) - 1;
+    if (r <= 0) {
+        r = 1;
+    }
+    NSLog(@"%i Need to hint %@ and %@",r,  _quotes[r], _quotes[r+1]);
+    for (WordTile *t in tileViews) {
+        if ([t.str isEqualToString:_quotes[r]]) {
+            [t highlightGreen];
+        }
+        if ([t.str isEqualToString:_quotes[r+1]]) {
+            [t highlightGreen];
+        }
+    }
     // perform the hint logic here
     
     /*
-     
      NSLog(@"Checking for moving view %@", movingView.str);
      if ([currentChain containsObject:movingView]) {
      for (WordTile *t in currentChain) {
      [t highlightGreen];
      }
      }
- 
     */
+    
     return;
 }
 

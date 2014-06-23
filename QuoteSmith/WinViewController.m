@@ -5,6 +5,8 @@
 //  Created by waffles on 4/29/14.
 //  Copyright (c) 2014 Anthony LaMantia. All rights reserved.
 
+#import <Social/Social.h>
+
 #import "WinViewController.h"
 #import "UIColor+Expanded.h"
 #import "WIkipediaViewController.h"
@@ -100,12 +102,28 @@
 
 - (void) tweet : (id) sender
 {
+    if ([SLComposeViewController isAvailableForServiceType:SLServiceTypeTwitter])
+    {
+        SLComposeViewController *tweetSheet = [SLComposeViewController
+                                               composeViewControllerForServiceType:SLServiceTypeTwitter];
+        [tweetSheet setInitialText:@"Great fun to learn iOS programming at appcoda.com!"];
+        [self presentViewController:tweetSheet animated:YES completion:nil];
+    } else {
+        NSLog(@"-- NO TWITTER");
+    }
     
 }
 
 - (void) facebook : (id) sender
 {
-    
+    if([SLComposeViewController isAvailableForServiceType:SLServiceTypeFacebook]) {
+        SLComposeViewController *controller = [SLComposeViewController composeViewControllerForServiceType:SLServiceTypeFacebook];
+        
+        [controller setInitialText:@"First post from my iPhone app"];
+        [self presentViewController:controller animated:YES completion:Nil];
+    } else {
+        NSLog(@"-- NO TWITTER");
+    }
 }
 
 - (void) displaySocial : (float) positionY
