@@ -97,20 +97,35 @@
     }];
 }
 
+
+- (void) tweet : (id) sender
+{
+    
+}
+
+- (void) facebook : (id) sender
+{
+    
+}
+
 - (void) displaySocial : (float) positionY
 {
     
-    NavBarButton *twitterView = [[NavBarButton alloc] initWithFrame:CGRectMake(200, positionY, 40, 44)];
-    [twitterView addTarget:self action:@selector(tweet:) forControlEvents:UIControlEventTouchUpInside];
-    [twitterView setBackgroundImage:[UIImage imageNamed:@"twitter_share"] forState:UIControlStateNormal];
-    [sv addSubview:twitterView];
+    float xOff = self.view.bounds.size.width;
+    xOff -= 20;
+    xOff -= 40;
     
-    
-    NavBarButton *facebookView = [[NavBarButton alloc] initWithFrame:CGRectMake(260, positionY, 40, 44)];
-    [facebookView addTarget:self action:@selector(tweet:) forControlEvents:UIControlEventTouchUpInside];
+    NavBarButton *facebookView = [[NavBarButton alloc] initWithFrame:CGRectMake(xOff, positionY, 40, 44)];
+    [facebookView addTarget:self action:@selector(facebook:) forControlEvents:UIControlEventTouchUpInside];
     [facebookView setBackgroundImage:[UIImage imageNamed:@"facebook_share"] forState:UIControlStateNormal];
     [sv addSubview:facebookView];
 
+    xOff -= 60;
+    
+    NavBarButton *twitterView = [[NavBarButton alloc] initWithFrame:CGRectMake(xOff, positionY, 40, 44)];
+    [twitterView addTarget:self action:@selector(tweet:) forControlEvents:UIControlEventTouchUpInside];
+    [twitterView setBackgroundImage:[UIImage imageNamed:@"twitter_share"] forState:UIControlStateNormal];
+    [sv addSubview:twitterView];
     
     return;
 }
@@ -151,7 +166,7 @@
     cY += 50;
     /// Draw the wikipedia button .. Learn More about X
     
-    NSString *wikiString = [NSString stringWithFormat:@"  Learn more about %@  ",
+    NSString *wikiString = [NSString stringWithFormat:@"Learn more about %@",
                             [self.quote objectForKey:@"author"]];
     buttonWikipedia = [UIButton buttonWithType:UIButtonTypeRoundedRect];
     buttonWikipedia.frame = CGRectMake((self.view.bounds.size.width/2) - (labelRect.size.width/2), 140, 240, 30);
@@ -162,10 +177,10 @@
     buttonWikipedia.titleLabel.font = [[AppContext sharedContext] fontForType:FONT_TYPE_WIN_BUTTON];
     buttonWikipedia.titleLabel.textAlignment = NSTextAlignmentCenter;
     CGRect titleLabelRect = [wikiString boundingRectWithSize:max options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:buttonWikipedia.titleLabel.font} context:nil];
-    buttonWikipedia.frame = CGRectMake((self.view.bounds.size.width/2) - (titleLabelRect.size.width/2),
+    buttonWikipedia.frame = CGRectMake(((self.view.bounds.size.width/2) - (titleLabelRect.size.width/2) - 10 ),
                                        cY,
-                                       titleLabelRect.size.width,
-                                       titleLabelRect.size.height);
+                                       titleLabelRect.size.width + 20,
+                                       titleLabelRect.size.height + 20);
     [buttonWikipedia setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     buttonWikipedia.layer.borderColor = [UIColor blackColor].CGColor;
     buttonWikipedia.layer.borderWidth = 1.0;

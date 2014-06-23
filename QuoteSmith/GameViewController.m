@@ -691,7 +691,7 @@ float node_cost(CGPoint a, CGPoint b)
     UIBarButtonItem *menuButton = [[UIBarButtonItem alloc] initWithTitle:@"MENU" style:UIBarButtonItemStylePlain target:self action:@selector(hint:)];
 
     optionsToolbar = [[UIToolbar alloc] initWithFrame:optionsView.frame];
-    [optionsToolbar setItems:@[flexibleSpace, skipButton, hintButton, menuButton, flexibleSpace] animated:YES];
+    [optionsToolbar setItems:@[menuButton, flexibleSpace, hintButton, skipButton] animated:YES];
     
     [optionsView addSubview:optionsToolbar];
     
