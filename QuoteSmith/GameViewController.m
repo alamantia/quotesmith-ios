@@ -592,8 +592,6 @@ float node_cost(CGPoint a, CGPoint b)
         [panRecognizer setDelegate:self];
         [tile addGestureRecognizer:panRecognizer];
         
-        
-        
         UISwipeGestureRecognizer *recognizer = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(swipe:)];
         [recognizer setDirection:(UISwipeGestureRecognizerDirectionDown)];
         [sv addGestureRecognizer:recognizer];
@@ -607,9 +605,8 @@ float node_cost(CGPoint a, CGPoint b)
     NSArray *_quotes = quote[@"words"];
     int r =   (rand() % [_quotes count]) - 1;
     if (r <= 0) {
-        r = 1;
+        r = 0;
     }
-    NSLog(@"%i Need to hint %@ and %@",r,  _quotes[r], _quotes[r+1]);
     for (WordTile *t in tileViews) {
         if ([t.str isEqualToString:_quotes[r]]) {
             [t highlightGreen];
