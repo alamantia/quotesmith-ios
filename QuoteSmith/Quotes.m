@@ -13,15 +13,27 @@
 }
 @end
 
-static int current_quote = 0;
+int current_quote = 0;
 
 @implementation Quotes
 
+- (id) init {
+    self = [super init];
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    NSNumber *currentQuote = [userDefaults objectForKey:@"current_quote"];
+    if (currentQuote != nil && [currentQuote class] != [NSNull class]) {
+        current_quote = [currentQuote intValue];
+    }
+    return self;
+}
 - (NSDictionary *) randomQuote
 {
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
     NSMutableDictionary *r = [[NSMutableDictionary alloc] init];
     int q_index = rand() % [quoteArray count];
     q_index = current_quote % [quoteArray count];
+    [userDefaults setValue:[NSNumber numberWithInt:current_quote] forKeyPath:@"current_quote"];
+    [userDefaults synchronize];
     NSDictionary *quoteIndex = [quoteArray objectAtIndex:q_index];
     NSError* error = nil;
     
@@ -41,7 +53,6 @@ static int current_quote = 0;
     NSArray *words = [r[@"quote"] componentsSeparatedByString:@" "];
     r[@"words"] = [words copy];
     NSLog(@"%@", quote);
-    current_quote++;
     return [[NSDictionary alloc] initWithDictionary:r];
 }
 

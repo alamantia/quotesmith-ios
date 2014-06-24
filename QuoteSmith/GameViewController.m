@@ -17,6 +17,7 @@
 #import "AppContext.h"
 #import "NavBarButton.h"
 #import "PlasmaBackgrounds.h"
+#import "ExpandingNavigationBar.h"
 
 #define ARC4RANDOM_MAX      0x100000000
 
@@ -356,7 +357,7 @@ float node_cost(CGPoint a, CGPoint b)
     NSLog(@"Checking for moving view %@", movingView.str);
     if ([currentChain containsObject:movingView]) {
         for (WordTile *t in currentChain) {
-            [t highlightGreen];
+            //[t highlightGreen];
         }
     }
     for (WordTile *t in matchingTiles) {
@@ -412,14 +413,18 @@ float node_cost(CGPoint a, CGPoint b)
         if (![[word lowercaseString] isEqualToString:[t.str lowercaseString]]) {
             matched = NO;
         }
-        if (matched == YES) {
-            NSLog(@"******* MATCHED ******");
-            if (!won) {
-                won = YES;
-                [self performWin];
-            }
+        
+        
+    }
+    
+    if (matched == YES) {
+        NSLog(@"******* MATCHED ******");
+        if (!won) {
+            won = YES;
+            [self performWin];
         }
     }
+
     return;
 }
 
@@ -474,15 +479,15 @@ float node_cost(CGPoint a, CGPoint b)
         
         float targetX = firstX + location.x;
         float targetY = firstY + location.y;
-        float newX = firstX + location.x;
-        float newY = firstY + location.y;
-        
+        float newX = firstX    + location.x;
+        float newY = firstY    + location.y;
+
         if (newX + t.frame.size.width >= self.view.frame.size.width) {
             targetX = self.view.frame.size.width - t.frame.size.width;
         } else if (newX <= 0) {
             targetX = 0;
         }
-        
+
         if (newY + t.frame.size.height >= self.view.frame.size.height) {
             targetY = self.view.frame.size.height - t.frame.size.height;
         } else if (newY <= 0) {
@@ -550,7 +555,6 @@ float node_cost(CGPoint a, CGPoint b)
     self.navigationController.topViewController.title = @"Quote Smith";
     self.navigationController.navigationBar.barTintColor = [UIColor colorWithHexString:@"ffffff"];
 
-    
     [AppContext sharedContext].fgColor = fgColor;
     [AppContext sharedContext].bgColor = bgColor;
 }
@@ -750,7 +754,9 @@ float node_cost(CGPoint a, CGPoint b)
     self.navigationController.navigationBar.frame = fr;
 }
 
+extern int  current_quote;
 - (void) displayWin {
+    current_quote++;
     WinViewController *win = [[WinViewController alloc] init];
     win.view.backgroundColor = [[AppContext sharedContext] bgColor];
     win.view.backgroundColor = [UIColor whiteColor];
@@ -759,9 +765,11 @@ float node_cost(CGPoint a, CGPoint b)
     win.delegate = self;
     win.quote = quote;
     win.modalPresentationStyle = UIModalPresentationCustom;
-    UINavigationController *n = [[UINavigationController alloc] initWithRootViewController:win];
+    
+    UINavigationController *n = [[UINavigationController alloc] initWithNavigationBarClass:[UINavigationBar class] toolbarClass:nil];
+    [n pushViewController:win animated:NO];
+    
     n.transitioningDelegate = self;
-    [n.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor blackColor]}];
     n.modalPresentationStyle = UIModalPresentationCustom;
     
     [self hideOptions];

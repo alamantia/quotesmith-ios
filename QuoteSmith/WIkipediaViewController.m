@@ -62,7 +62,6 @@
                                                                                 target:self
                                                                                 action:@selector(done:)];
     [[self navigationItem] setRightBarButtonItem:doneButton];
-    
 }
 
 - (void)didReceiveMemoryWarning
@@ -70,6 +69,17 @@
     [super didReceiveMemoryWarning];
 }
 
+- (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error
+{
+    UIAlertView *alert = [[UIAlertView alloc]
+                          initWithTitle: @"Error"
+                          message: @"Failed to load Wikipedia please check your network connection."
+                          delegate: self
+                          cancelButtonTitle:@"OK"
+                          otherButtonTitles:nil];
+    [alert show];
+
+}
 - (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType
 {
     NSLog(@"Direct to %@", request.URL.absoluteString);

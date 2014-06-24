@@ -15,6 +15,7 @@
 #import "UIColor+HSV.h"
 #import "WordTile.h"
 #import "NavBarButton.h"
+#import "ExpandingNavigationBar.h"
 
 
 #define MY_INTERSTITIAL_UNIT_ID @"ca-app-pub-8721364252541931/3727404808"
@@ -56,6 +57,7 @@
 
 - (void) viewWillAppear:(BOOL)animated
 {
+    
     self.navigationController.navigationBar.translucent = NO;
     //self.navigationController.navigationBar.barTintColor = [AppContext sharedContext].bgColor;
     //self.navigationController.navigationBar.tintColor = [AppContext sharedContext].fgColor;
@@ -67,15 +69,14 @@
     [settingsView setBackgroundImage:[UIImage imageNamed:@"icon_26914"] forState:UIControlStateNormal];
     UIBarButtonItem *expandButton = [[UIBarButtonItem alloc] initWithCustomView:settingsView];
     [[self navigationItem] setRightBarButtonItems:@[expandButton]];
-
-    
-
 }
+
 - (WordTile *) startTileWithString : (NSString *) s : (int) x : (int) y
 {
     // compute this again here so the size isn't adjusted durring animation (should move to wordtile but w\e)
     CGSize max = CGSizeMake(self.view.bounds.size.width,
                             self.view.bounds.size.height);
+    
     CGRect titleLabelRect = [s boundingRectWithSize:max options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:quoteFont} context:nil];
 
     WordTile *t = [[WordTile alloc] initWithFrame:CGRectMake(   0 ,0,
@@ -99,30 +100,39 @@
     }];
 }
 
-
 - (void) tweet : (id) sender
 {
     if ([SLComposeViewController isAvailableForServiceType:SLServiceTypeTwitter])
     {
         SLComposeViewController *tweetSheet = [SLComposeViewController
                                                composeViewControllerForServiceType:SLServiceTypeTwitter];
-        [tweetSheet setInitialText:@"Great fun to learn iOS programming at appcoda.com!"];
+        [tweetSheet setInitialText:self.quote[@"quote"]];
         [self presentViewController:tweetSheet animated:YES completion:nil];
     } else {
-        NSLog(@"-- NO TWITTER");
+        UIAlertView *alert = [[UIAlertView alloc]
+                              initWithTitle: @"Error"
+                              message: @"You must configure a Twitter account in your device settings before posting."
+                              delegate: nil
+                              cancelButtonTitle:@"OK"
+                              otherButtonTitles:nil];
+        [alert show];
     }
-    
 }
 
 - (void) facebook : (id) sender
 {
     if([SLComposeViewController isAvailableForServiceType:SLServiceTypeFacebook]) {
         SLComposeViewController *controller = [SLComposeViewController composeViewControllerForServiceType:SLServiceTypeFacebook];
-        
-        [controller setInitialText:@"First post from my iPhone app"];
+        [controller setInitialText:self.quote[@"quote"]];
         [self presentViewController:controller animated:YES completion:Nil];
     } else {
-        NSLog(@"-- NO TWITTER");
+        UIAlertView *alert = [[UIAlertView alloc]
+                              initWithTitle: @"Error"
+                              message: @"You must configure a Facebook account in your device settings before posting."
+                              delegate: nil
+                              cancelButtonTitle:@"OK"
+                              otherButtonTitles:nil];
+        [alert show];
     }
 }
 
@@ -207,7 +217,7 @@
     [sv addSubview:buttonWikipedia];
     sv.contentSize = CGSizeMake(self.view.frame.size.width, cY + titleLabelRect.size.height + 200);
     
-    [self displaySocial:cY + titleLabelRect.size.height + 40];
+    [self displaySocial:cY + titleLabelRect.size.height + 50];
 }
 
 // display some author detail
@@ -351,10 +361,12 @@
 {
     WIkipediaViewController *wvc = [[WIkipediaViewController alloc] init];
     wvc.view.frame = self.view.bounds;
-    UINavigationController *n = [[UINavigationController alloc] initWithRootViewController:wvc];
-    n.navigationBar.translucent = NO;
+    UINavigationController *n = [[UINavigationController alloc] initWithNavigationBarClass:[ExpandingNavigationBar class] toolbarClass:nil];
+    [n pushViewController:wvc animated:NO];
+
     [self presentViewController:n animated:YES completion:^{
         [wvc loadAddress:[self.quote objectForKey:@"author_url"]];
+        n.topViewController.title = self.quote[@"author"];
     }];
 }
 
@@ -437,7 +449,6 @@
     // Pass the selected object to the new view controller.
 }
 */
-
 
 -(BOOL)prefersStatusBarHidden
 {
