@@ -40,14 +40,12 @@
                             options:UIViewAnimationOptionCurveEaseIn
          
                          animations:^{
-                             //fromVC.view.frame = fr;
                              fromVC.view.transform = CGAffineTransformMakeScale(0.1, 0.1);
                              fromVC.view.alpha = 0;
                              toVC.view.alpha = 1;
                              toVC.view.transform = CGAffineTransformMakeScale(1.0, 1.0);
 
                              toVC.view.frame = CGRectMake(0, 0, toVC.view.bounds.size.width, toVC.view.bounds.size.height);
-                             //fromVC.view.center = CGPointMake(fromVC.view.center.x - 320, fromVC.view.center.y);
                              toVC.view.transform = CGAffineTransformMakeRotation(-0);
 
                          } completion:^(BOOL finished) {

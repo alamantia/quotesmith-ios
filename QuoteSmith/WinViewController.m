@@ -189,7 +189,7 @@
     bioLabel.text = bioString;
     [sv addSubview:bioLabel];
     
-    
+
     cY += labelRect.size.height;
     cY += 50;
     /// Draw the wikipedia button .. Learn More about X

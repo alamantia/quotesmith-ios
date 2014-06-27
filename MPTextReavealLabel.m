@@ -56,8 +56,6 @@
 }
 
 
-
-
 - (void)animateWithDuration:(CGFloat)duration{
     
     
@@ -119,11 +117,9 @@
     CGPathRelease(letters);
     CFRelease(line);
     
-    
     [path applyTransform:CGAffineTransformMakeScale(1.0, -1.0)];
     [path applyTransform:CGAffineTransformMakeTranslation(0.0, boundingBox.size.height)];
-    
-    
+
     if (self.reversedAnimation) {
         return [[path bezierPathByReversingPath] CGPath];
     }

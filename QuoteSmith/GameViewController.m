@@ -697,17 +697,25 @@ float node_cost(CGPoint a, CGPoint b)
     [self setupBoard];
 }
 
+- (IBAction) exit : (id) sender
+{
+    [self dismissViewControllerAnimated:YES completion:^{
+    }];
+}
+
 - (void) populateOptionsView {
     UIBarButtonItem *flexibleSpace =  [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
     UIBarButtonItem *skipButton = [[UIBarButtonItem alloc] initWithTitle:@"SKIP" style:UIBarButtonItemStylePlain target:self action:@selector(skip:)];
     UIBarButtonItem *hintButton = [[UIBarButtonItem alloc] initWithTitle:@"HINT" style:UIBarButtonItemStylePlain target:self action:@selector(hint:)];
-    UIBarButtonItem *menuButton = [[UIBarButtonItem alloc] initWithTitle:@"MENU" style:UIBarButtonItemStylePlain target:self action:@selector(hint:)];
-
+    UIBarButtonItem *menuButton = [[UIBarButtonItem alloc] initWithTitle:@"MENU" style:UIBarButtonItemStylePlain target:self action:@selector(exit:)];
     optionsToolbar = [[UIToolbar alloc] initWithFrame:optionsView.frame];
     [optionsToolbar setItems:@[menuButton, flexibleSpace, hintButton, skipButton] animated:YES];
-    
     [optionsView addSubview:optionsToolbar];
-    
+}
+
+- (void) viewDidAppear:(BOOL)animated
+{
+    [self setup];
 }
 
 - (void)viewDidLoad
@@ -733,7 +741,6 @@ float node_cost(CGPoint a, CGPoint b)
     [quotes randomQuote];
     self.navigationController.navigationBar.translucent = NO;
     moving = NO;
-    [self setup];
 }
 
 - (void)didReceiveMemoryWarning

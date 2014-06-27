@@ -34,14 +34,16 @@
 { 
     srand(time(0));
     [self StyleTheApp];
-    GameViewController *gvc = [[GameViewController alloc] init];
-    MainMenuViewController *mvc = [[MainMenuViewController alloc] init];
+    /*
+    GameViewController *gvc     = [[GameViewController alloc] init];
+    MainMenuViewController *mvc           = [[MainMenuViewController alloc] init];
     UINavigationController *navController = [[UINavigationController alloc] initWithNavigationBarClass:[UINavigationBar class] toolbarClass:nil];
-    [navController pushViewController:gvc animated:NO];
+    [navController pushViewController:mvc animated:NO];
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     // Override point for customization after application launch.
     self.window.rootViewController = navController;
     [self.window makeKeyAndVisible];
+     */
     return YES;
 }
 
