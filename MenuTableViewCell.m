@@ -20,6 +20,7 @@
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
         titleLabel = [[UILabel alloc] init];
+        titleLabel.font = [UIFont fontWithName:@"Futura-CondensedExtraBold" size:21];
         self.selectionStyle = UITableViewCellSelectionStyleNone;
         [self.contentView addSubview:titleLabel];
     }

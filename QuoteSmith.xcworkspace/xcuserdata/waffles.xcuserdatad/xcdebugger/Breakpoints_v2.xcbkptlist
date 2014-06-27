@@ -26,11 +26,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "QuoteSmith/WinViewController.m"
-            timestampString = "425271785.74685"
+            timestampString = "425539502.359745"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "306"
-            endingLineNumber = "306"
+            startingLineNumber = "317"
+            endingLineNumber = "317"
             landmarkName = "-dropTiles"
             landmarkType = "5">
          </BreakpointContent>

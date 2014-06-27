@@ -32,7 +32,7 @@
     NSMutableArray *tileArray;
     NSMutableArray *targetsArray;
     NSMutableArray *pendingTiles;
-    
+    UILabel *bioLabel;
     int animation_line;
     
     UITextView *quoteInfo;
@@ -155,6 +155,16 @@
     [twitterView setBackgroundImage:[UIImage imageNamed:@"twitter_share"] forState:UIControlStateNormal];
     [sv addSubview:twitterView];
     
+    facebookView.alpha = 0.0;
+    twitterView.alpha = 0.0;
+    
+    [UIView animateWithDuration:0.5
+                     animations:^{
+                         facebookView.alpha = 1.0;
+                         twitterView.alpha = 1.0;
+                         buttonWikipedia.alpha = 1.0;
+                         bioLabel.alpha = 1.0;
+                     }];
     return;
 }
 
@@ -180,13 +190,14 @@
     cY = authorFrame.size.height + authorFrame.origin.y;
     cY += 50;
     
-    UILabel *bioLabel = [[UILabel alloc] initWithFrame:CGRectMake((self.view.bounds.size.width/2) - (labelRect.size.width/2) , cY, labelRect.size.width, labelRect.size.height)];
+    bioLabel = [[UILabel alloc] initWithFrame:CGRectMake((self.view.bounds.size.width/2) - (labelRect.size.width/2) , cY, labelRect.size.width, labelRect.size.height)];
     bioLabel.font = bioFont;
     
     bioLabel.textColor = bioColor;
     bioLabel.numberOfLines = 0;
     bioLabel.textColor = [[AppContext sharedContext] fgColor];
     bioLabel.text = bioString;
+    bioLabel.alpha = 0.0;
     [sv addSubview:bioLabel];
     
 
@@ -199,7 +210,7 @@
     buttonWikipedia = [UIButton buttonWithType:UIButtonTypeRoundedRect];
     buttonWikipedia.frame = CGRectMake((self.view.bounds.size.width/2) - (labelRect.size.width/2), 140, 240, 30);
     buttonWikipedia.titleLabel.numberOfLines = 0;
-
+    buttonWikipedia.alpha = 0.0;
     [buttonWikipedia addTarget:self action:@selector(wikipedia:) forControlEvents:UIControlEventTouchUpInside];
     [buttonWikipedia setTitle:wikiString forState:UIControlStateNormal];
     buttonWikipedia.titleLabel.font = [[AppContext sharedContext] fontForType:FONT_TYPE_WIN_BUTTON];
