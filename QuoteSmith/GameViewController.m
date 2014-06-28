@@ -737,7 +737,7 @@ float node_cost(CGPoint a, CGPoint b)
     UITapGestureRecognizer *tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tap:)];
     [self.view addSubview:sv];
     [sv addGestureRecognizer:tapGestureRecognizer];
-    [quotes loadIndex];
+    [Quotes loadIndex];
     [quotes randomQuote];
     self.navigationController.navigationBar.translucent = NO;
     moving = NO;

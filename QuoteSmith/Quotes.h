@@ -10,7 +10,10 @@
 
 @interface Quotes : NSObject
 
-- (void) loadIndex;
++ (void) loadIndex;
 - (NSDictionary *) randomQuote;
+
++ (NSInteger) lastQuoteIndex;
++ (NSDictionary *)  quoteforIndex : (NSInteger) index;
 
 @end

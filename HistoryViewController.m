@@ -5,11 +5,18 @@
 //  Created by waffles on 6/26/14.
 //  Copyright (c) 2014 Anthony LaMantia. All rights reserved.
 //
-
+#import "Quotes.h"
 #import "HistoryViewController.h"
+#import "HistoryTableViewCell.h"
+#import "UIColor+Expanded.h"
 
-@interface HistoryViewController ()
+#define HISTORY_CELL_ID @"HistoryCell"
+#define HISTORY_CELL_AUTO_ID @"HistoryTableViewCell"
 
+@interface HistoryViewController () {
+
+}
+@property(weak) IBOutlet UITableView *historyTableView;
 @end
 
 @implementation HistoryViewController
@@ -18,7 +25,6 @@
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-        // Custom initialization
     }
     return self;
 }
@@ -31,7 +37,9 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
+    self.navigationController.topViewController.title = @"History";
+    self.navigationController.navigationBar.barTintColor = [UIColor colorWithHexString:@"ffffff"];
+    [self.historyTableView registerNib:[UINib nibWithNibName:HISTORY_CELL_AUTO_ID bundle:nil] forCellReuseIdentifier:HISTORY_CELL_AUTO_ID];
 }
 
 - (void)didReceiveMemoryWarning
@@ -40,15 +48,44 @@
     // Dispose of any resources that can be recreated.
 }
 
-/*
-#pragma mark - Navigation
 
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+    NSDictionary *quote = [Quotes quoteforIndex:indexPath.row];
+    // quote[@"quote"];
+    return 400.0;
 }
-*/
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    return;
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    HistoryTableViewCell *cell = [tableView
+                               dequeueReusableCellWithIdentifier:HISTORY_CELL_AUTO_ID];
+    NSDictionary *quote = [Quotes quoteforIndex:indexPath.row];
+    cell.textLabel.text = quote[@"quote"];
+    NSLog(@"Setting quote %@", quote[@"quote"]);
+    return cell;
+}
+
+- (void)tableView:(UITableView *)tableView didEndDisplayingCell:(HistoryTableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
+{
+
+}
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+    return [Quotes lastQuoteIndex];
+}
+
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
+{
+    return 1;
+}
+
 
 @end
