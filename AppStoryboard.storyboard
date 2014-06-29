@@ -99,10 +99,12 @@
                             <constraint firstItem="ZW3-c0-MeV" firstAttribute="bottom" secondItem="gdR-3S-OP4" secondAttribute="bottom" id="6DE-Dh-6Xv"/>
                             <constraint firstItem="ZW3-c0-MeV" firstAttribute="trailing" secondItem="gdR-3S-OP4" secondAttribute="trailing" id="6yP-vQ-BlE"/>
                             <constraint firstItem="gdR-3S-OP4" firstAttribute="top" secondItem="ifo-gk-xuu" secondAttribute="top" id="9b0-Lf-htW"/>
+                            <constraint firstItem="gdR-3S-OP4" firstAttribute="height" secondItem="ZW3-c0-MeV" secondAttribute="height" id="B7U-TJ-Gy7"/>
                             <constraint firstItem="ZW3-c0-MeV" firstAttribute="top" secondItem="gdR-3S-OP4" secondAttribute="top" id="SQ5-ii-ycW"/>
                             <constraint firstItem="S68-54-1Nb" firstAttribute="top" secondItem="gdR-3S-OP4" secondAttribute="bottom" id="TJv-5L-Exo"/>
                             <constraint firstItem="gdR-3S-OP4" firstAttribute="leading" secondItem="ifo-gk-xuu" secondAttribute="leading" id="gSp-uS-0La"/>
                             <constraint firstItem="S68-54-1Nb" firstAttribute="top" secondItem="gdR-3S-OP4" secondAttribute="bottom" id="ix8-6U-pRd"/>
+                            <constraint firstItem="gdR-3S-OP4" firstAttribute="width" secondItem="ZW3-c0-MeV" secondAttribute="width" id="jSu-Cb-ZeO"/>
                             <constraint firstItem="ZW3-c0-MeV" firstAttribute="leading" secondItem="gdR-3S-OP4" secondAttribute="leading" id="xYr-Cf-fab"/>
                             <constraint firstAttribute="trailing" secondItem="gdR-3S-OP4" secondAttribute="trailing" id="yOr-BX-IlP"/>
                         </constraints>

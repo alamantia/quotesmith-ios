@@ -586,10 +586,17 @@ float node_cost(CGPoint a, CGPoint b)
         tile.mode = TILE_MODE_GAME;
         [sv addSubview:tile];
         CGRect fr = tile.frame;
-        fr.origin.x = (int)floor(rand() % (int)(self.view.bounds.size.width  - 60));
-        fr.origin.y = (int)floor(rand() % (int)(self.view.bounds.size.height - 60));
-        tile.frame = fr;
+        
+        
+        // Tweek these so quotes fall in the proper position!tile
+
+        
         [tile setString:s];
+        
+        fr.origin.x = (int)floor(rand() % (int)(self.view.bounds.size.width  - MAX(tile.frame.size.width, 140)));
+        fr.origin.y = (int)floor(rand() % (int)(self.view.bounds.size.height - MAX(tile.frame.size.height,120)));
+        tile.frame = fr;
+
         UIPanGestureRecognizer *panRecognizer = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(move:)];
         [panRecognizer setMinimumNumberOfTouches:1];
         [panRecognizer setMaximumNumberOfTouches:1];

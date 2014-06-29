@@ -31,6 +31,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    self.navigationController.topViewController.title = @"Tutorial";
     // Do any additional setup after loading the view.
 }
 
