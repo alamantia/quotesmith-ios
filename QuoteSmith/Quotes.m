@@ -97,6 +97,7 @@ int current_quote = 0;
     r[@"author_url"]     = quote[@"page_url"];
     NSArray *words = [r[@"quote"] componentsSeparatedByString:@" "];
     r[@"words"] = [words copy];
+    NSLog(@"QuoteIndex %@", quoteFilePath);
     NSLog(@"%@", quote);
     return [[NSDictionary alloc] initWithDictionary:r];
 }
