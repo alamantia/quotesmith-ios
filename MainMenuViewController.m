@@ -174,6 +174,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    self.navigationController.topViewController.title = @"Menu";
     [self.navigationController setNavigationBarHidden:YES animated:NO];
 
 }

@@ -9,6 +9,8 @@
 #import "HistoryViewController.h"
 #import "HistoryTableViewCell.h"
 #import "UIColor+Expanded.h"
+#import "AppContext.h"
+#import "WinViewController.h"
 
 #define HISTORY_CELL_ID @"HistoryCell"
 #define HISTORY_CELL_AUTO_ID @"HistoryTableViewCell"
@@ -37,44 +39,50 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    [self.historyTableView registerNib:[UINib nibWithNibName:HISTORY_CELL_AUTO_ID bundle:nil] forCellReuseIdentifier:HISTORY_CELL_AUTO_ID];
     self.navigationController.topViewController.title = @"History";
     self.navigationController.navigationBar.barTintColor = [UIColor colorWithHexString:@"ffffff"];
-    [self.historyTableView registerNib:[UINib nibWithNibName:HISTORY_CELL_AUTO_ID bundle:nil] forCellReuseIdentifier:HISTORY_CELL_AUTO_ID];
 }
 
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
-
+ }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     NSDictionary *quote = [Quotes quoteforIndex:indexPath.row];
-    // quote[@"quote"];
-    return 400.0;
+    return [HistoryTableViewCell heightForQuote:quote inFrame:tableView.frame];
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    WinViewController *win = [[WinViewController alloc] init];
+    win.view.backgroundColor = [[AppContext sharedContext] bgColor];
+    win.view.backgroundColor = [UIColor whiteColor];
+    [win historyMode];
+    win.quote = [Quotes quoteforIndex:indexPath.row];
+    win.modalPresentationStyle = UIModalPresentationCustom;
+    UINavigationController *n = [[UINavigationController alloc] initWithNavigationBarClass:[UINavigationBar class] toolbarClass:nil];
+    [n pushViewController:win animated:NO];
+    [self.navigationController pushViewController:win animated:YES];
+    [win displayQuote];
     return;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    HistoryTableViewCell *cell = [tableView
-                               dequeueReusableCellWithIdentifier:HISTORY_CELL_AUTO_ID];
+    HistoryTableViewCell *cell = [self.historyTableView dequeueReusableCellWithIdentifier:HISTORY_CELL_AUTO_ID];
     NSDictionary *quote = [Quotes quoteforIndex:indexPath.row];
-    cell.textLabel.text = quote[@"quote"];
-    NSLog(@"Setting quote %@", quote[@"quote"]);
+    cell.authorLabel.text = quote[@"author"];
+    cell.quoteLabel.text = quote[@"quote"];
     return cell;
 }
 
 - (void)tableView:(UITableView *)tableView didEndDisplayingCell:(HistoryTableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
 {
-
+    
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section

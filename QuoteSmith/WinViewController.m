@@ -23,7 +23,7 @@
 @interface WinViewController () {
     
     GADInterstitial *interstitial_;
-
+    BOOL historyMode;
     UIButton *buttonNext;
     UIButton *buttonWikipedia;
     
@@ -64,11 +64,20 @@
     self.navigationController.topViewController.title = @"Quote Smith";
     
     
+    if (historyMode)
+    {
+        return;
+    }
     NavBarButton *settingsView = [[NavBarButton alloc] initWithFrame:CGRectMake(0, 0, 24, 24)];
     [settingsView addTarget:self action:@selector(finished:) forControlEvents:UIControlEventTouchUpInside];
     [settingsView setBackgroundImage:[UIImage imageNamed:@"icon_26914"] forState:UIControlStateNormal];
     UIBarButtonItem *expandButton = [[UIBarButtonItem alloc] initWithCustomView:settingsView];
     [[self navigationItem] setRightBarButtonItems:@[expandButton]];
+}
+
+- (void) historyMode
+{
+    historyMode = YES;
 }
 
 - (WordTile *) startTileWithString : (NSString *) s : (int) x : (int) y
@@ -174,7 +183,6 @@
     bioColor   = [UIColor colorWithHexString:@"17b680"];
     bioFont    = [[AppContext sharedContext] fontForType:FONT_TYPE_BIO];
 
-    // grab (and probably verify) the bioString that is being used
     NSString *bioString = self.quote[@"author_bio"];
     NSLog(@"Quote String is %@", bioString);
     
@@ -384,8 +392,14 @@
 - (void) finished : (id) sender
 {
     buttonNext.hidden = YES;
-    [self.delegate setupBoard];
+    
+    if (self.delegate != nil)
+    {
+        [self.delegate setupBoard];
+    }
+    
     [self dismissViewControllerAnimated:YES completion:^{
+    
     }];
     
 }
@@ -394,6 +408,7 @@
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
+        historyMode = NO;
     }
     return self;
 }

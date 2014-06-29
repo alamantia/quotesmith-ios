@@ -10,4 +10,9 @@
 
 @interface HistoryTableViewCell : UITableViewCell
 
+@property  IBOutlet UILabel *authorLabel;
+@property  IBOutlet UILabel *quoteLabel;
+
++ (CGFloat) heightForQuote : (NSDictionary *) quote inFrame:(CGRect) frame;
+
 @end

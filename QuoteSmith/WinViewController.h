@@ -17,6 +17,8 @@
 @property (nonatomic, strong) GameViewController *delegate;
 @property (nonatomic, strong) NSDictionary *quote;
 @property (nonatomic, assign) struct HSV bgHSV;
+
+- (void) historyMode;
 - (void) displayQuote;
 - (void) displayBio:(CGPoint) p;
 

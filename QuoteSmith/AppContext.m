@@ -53,6 +53,22 @@
         }
     }
     
+    if (fontType == FONT_TYPE_HISTORY_AUTOR) {
+        if ( UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone ) {
+            return [UIFont fontWithName:@"Futura-MediumItalic" size:16.0];
+        } else {
+            return [UIFont fontWithName:@"Futura-MediumItalic" size:24.0];
+        }
+    }
+
+    if (fontType == FONT_TYPE_HISTORY_QUOTE) {
+        if ( UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone ) {
+            return [UIFont fontWithName:@"Futura-Medium" size:26.0];
+        } else {
+            return [UIFont fontWithName:@"Futura-Medium" size:32.0];
+        }
+    }
+
     if (fontType == FONT_TYPE_WIN_BUTTON) {
         if ( UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone ) {
             return [UIFont fontWithName:@"Futura-Medium" size:26.0];
