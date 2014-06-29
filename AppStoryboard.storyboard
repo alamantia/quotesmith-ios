@@ -41,7 +41,41 @@
                     <view key="view" contentMode="scaleToFill" id="vLU-W4-yRd">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="HOW TO PLAY" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="X5j-Ow-TAn">
+                                <rect key="frame" x="20" y="20" width="280" height="102"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" name="Futura-CondensedExtraBold" family="Futura" pointSize="33"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="1. Go back to the menu and tap  start" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="280" translatesAutoresizingMaskIntoConstraints="NO" id="nlp-ar-kM5">
+                                <rect key="frame" x="20" y="130" width="280" height="64"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" name="Futura-CondensedMedium" family="Futura" pointSize="22"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="2. Drag the word tiles with your finger to assemble a quote" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="280" translatesAutoresizingMaskIntoConstraints="NO" id="Un6-fN-bol">
+                                <rect key="frame" x="20" y="202" width="280" height="68"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" name="Futura-CondensedMedium" family="Futura" pointSize="22"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="3. Read and enjoy the biographical information" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="280" translatesAutoresizingMaskIntoConstraints="NO" id="dql-5f-4wA">
+                                <rect key="frame" x="20" y="282" width="280" height="68"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" name="Futura-CondensedMedium" family="Futura" pointSize="22"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="nlp-ar-kM5" firstAttribute="top" secondItem="X5j-Ow-TAn" secondAttribute="bottom" constant="20" id="Yph-BS-fnn"/>
+                            <constraint firstItem="dql-5f-4wA" firstAttribute="top" secondItem="Un6-fN-bol" secondAttribute="bottom" constant="10" id="aww-KG-LsN"/>
+                            <constraint firstItem="X5j-Ow-TAn" firstAttribute="top" secondItem="OvG-bK-Jdo" secondAttribute="bottom" constant="20" id="d3n-Vu-kZI"/>
+                            <constraint firstItem="X5j-Ow-TAn" firstAttribute="leading" secondItem="vLU-W4-yRd" secondAttribute="leading" constant="20" id="ece-OP-ccr"/>
+                            <constraint firstAttribute="trailing" secondItem="X5j-Ow-TAn" secondAttribute="trailing" constant="20" id="tnt-3A-ylU"/>
+                        </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="Uov-ko-69U"/>
                 </viewController>

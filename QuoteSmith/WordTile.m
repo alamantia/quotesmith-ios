@@ -182,7 +182,7 @@
         self.backgroundColor = self.bgColor;
         label.textColor = self.fgColor;
         if (self.mode == TILE_MODE_GAME) {
-            self.layer.borderColor = self.fgColor.CGColor;
+            self.layer.borderColor = [UIColor blackColor].CGColor;
             self.backgroundColor = [UIColor clearColor];
             self.layer.borderWidth = 1.0;
         }

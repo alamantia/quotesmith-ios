@@ -14,6 +14,7 @@
 #import "AppContext.h"
 #import "UIColor+HSV.h"
 #import "WordTile.h"
+#import "Quotes.h"
 #import "NavBarButton.h"
 #import "ExpandingNavigationBar.h"
 
@@ -415,14 +416,18 @@
 
 - (void) ad
 {
+    int currentQuote = [Quotes lastQuoteIndex];
+    if (currentQuote % 2 != 1) {
+        return;
+    }
     interstitial_ = [[GADInterstitial alloc] init];
     interstitial_.adUnitID = MY_INTERSTITIAL_UNIT_ID;
     interstitial_.delegate = self;
     GADRequest *r = [GADRequest request];
     /* IF DEBUG ADS */
-    r.testDevices = [NSArray arrayWithObjects:
-                     [[[UIDevice currentDevice] identifierForVendor] UUIDString],
-                     nil];
+    //r.testDevices = [NSArray arrayWithObjects:
+    //                 [[[UIDevice currentDevice] identifierForVendor] UUIDString],
+    //                 nil];
     [interstitial_ loadRequest:r];
 }
 
