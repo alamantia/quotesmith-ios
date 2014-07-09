@@ -184,6 +184,7 @@
         if (self.mode == TILE_MODE_GAME) {
             self.layer.borderColor = [UIColor blackColor].CGColor;
             self.backgroundColor = [UIColor clearColor];
+            label.textColor = [UIColor blackColor];
             self.layer.borderWidth = 1.0;
         }
     }
